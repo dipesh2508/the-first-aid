@@ -7,6 +7,7 @@ export interface IUser {
   phone: string;
   username: string;
   image: string;
+  gender: string;
   mpin?: number;
   aadhar?: string;
   role: mongoose.Schema.Types.ObjectId;
@@ -44,6 +45,13 @@ export const UserSchema = new mongoose.Schema<IUser>(
     },
     mpin: {
       type: Number,
+    },
+    gender: {
+      type: String,
+      required: true,
+      enum: [
+        "male", "female"
+      ]
     },
     aadhar: {
       type: String,
