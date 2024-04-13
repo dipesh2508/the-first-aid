@@ -23,12 +23,23 @@ import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
-  InputOTPSeparator
+  InputOTPSeparator,
 } from "@/components/ui/input-otp";
 import { toast } from "@/components/ui/use-toast";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { updateUserMPin } from "@/lib/actions/user.actions";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const FormSchema = z.object({
   pin: z.string().min(4, {
@@ -37,12 +48,9 @@ const FormSchema = z.object({
   mobile: z.boolean().default(false).optional(),
 });
 
-const MpinForm = ({userId}:{
-  userId: string;
-}) => {
+const MpinForm = ({ userId }: { userId: string }) => {
   const [tick, setTick] = useState<boolean>(false);
 
-  
   const pathname = usePathname();
   const router = useRouter();
 
@@ -141,9 +149,58 @@ const MpinForm = ({userId}:{
                   </label>
                 </FormControl>
                 <div className="space-y-1 leading-none flex items-center">
-                  <FormLabel>
+                  <FormLabel className="flex flex-row gap-1">
                     Accept the{" "}
-                    <Link href="/examples/forms" className="text-blue-600">Terms and Conditions</Link>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <p className="text-blue-500 cursor-pointer">
+                          Terms and Conditions
+                        </p>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>
+                            <h3 className="px-4">Terms and Conditions</h3>
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            <p className="text-slate-800 text-justify px-4">
+                              Lorem ipsum dolor sit amet, consectetur adipiscing
+                              elit. Sed ut tellus nec sapien condimentum
+                              fermentum. Donec in dolor auctor, consectetur
+                              ligula nec, tincidunt velit. Sed ut tellus nec
+                              sapien condimentum fermentum. Donec in dolor
+                              auctor, consectetur ligula nec, tincidunt velit.
+                              Sed ut tellus nec sapien condimentum fermentum.
+                              Donec in dolor auctor, consectetur ligula nec,
+                              tincidunt velit. Sed ut tellus nec sapien
+                              condimentum fermentum. Donec in dolor auctor,
+                              consectetur ligula nec, tincidunt velit.
+                            </p>
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel asChild>
+                            <Button
+                              onClick={() => {
+                                setTick(false);
+                              }}
+                              className="text-slate-900"
+                            >
+                              Decline
+                            </Button>
+                          </AlertDialogCancel>
+                          <AlertDialogAction asChild>
+                            <Button
+                              onClick={() => {
+                                setTick(true);
+                              }}
+                            >
+                              Agree
+                            </Button>
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </FormLabel>
                 </div>
               </FormItem>
