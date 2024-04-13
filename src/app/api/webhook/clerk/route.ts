@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import { headers } from "next/headers";
-import { NextResponse } from "next/server";
+import { NextResponse } from "next/server"
 
 import { WebhookEvent } from "@clerk/nextjs/server";
 import { Webhook } from "svix";
@@ -59,8 +59,7 @@ export async function POST(req: Request) {
   const eventType = evt.type;
 
   if (eventType === "user.created") {
-    const { id, email_addresses, image_url, username, first_name, last_name } =
-      evt.data;
+    const { id, email_addresses, image_url, username, first_name, last_name, phone_numbers } = evt.data;
 
     // create a new user in database
     const mongoUser = await createUser({
@@ -69,13 +68,14 @@ export async function POST(req: Request) {
       username: username!,
       email: email_addresses[0].email_address,
       image: image_url,
+      phone: phone_numbers[0].phone_number,
     });
 
     return NextResponse.json({ message: "User created", user: mongoUser });
   }
 
   if (eventType === "user.updated") {
-    const { id, email_addresses, image_url, username, first_name, last_name } =
+    const { id, email_addresses, image_url, username, first_name, last_name, phone_numbers } =
       evt.data;
 
     // create a new user in database
@@ -86,6 +86,7 @@ export async function POST(req: Request) {
         username: username!,
         email: email_addresses[0].email_address,
         image: image_url,
+        phone: phone_numbers[0].phone_number,
       },
       path: `/profile/${id}`,
     });
