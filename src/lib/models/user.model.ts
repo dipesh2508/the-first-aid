@@ -48,7 +48,6 @@ export const UserSchema = new mongoose.Schema<IUser>(
     },
     gender: {
       type: String,
-      required: true,
       enum: [
         "male", "female"
       ]
@@ -62,7 +61,6 @@ export const UserSchema = new mongoose.Schema<IUser>(
     },
     roleType: {
       type: String,
-      required: true,
       enum: ["doctor", "patient"],
     },
   },

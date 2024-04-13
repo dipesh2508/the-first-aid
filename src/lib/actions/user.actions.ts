@@ -16,7 +16,6 @@ interface IcreateUser {
 export async function createUser(userData: IcreateUser) {
   try {
     connectToDB();
-
     const newUser = await User.create(userData);
     return newUser;
   } catch (error) {
