@@ -44,7 +44,7 @@ export const userLinksEmergency: userLinks[] = [
     isReversed: false,
   },
   {
-    title: "Emergency Appointment",
+    title: "Appointment",
     name: "Connect with Doctor",
     link: "#",
     linkText: "Connect",
