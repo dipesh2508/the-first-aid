@@ -6,15 +6,11 @@ const Hero = () => {
   return (
     <>
       <section>
-        <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16">
-            <div className="relative  bg-primary-5  h-full   rounded-lg ">
+        <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2">
+            <div className="  h-full rounded-lg ">
               <div className="z-50 w-full ">
-                <Image
-                  alt=""
-                  src={heroDoctor}
-                  className="mt-8 h-3/4 w-full  object-center object-contain"
-                />
+
               </div>
             </div>
 
@@ -40,18 +36,18 @@ const Hero = () => {
             </div>
           </div>
         </div>
-        <div className="p-6 py-12  bg-red-600 text-gray-50">
-          <div className="container mx-auto">
-            <div className="flex flex-col lg:flex-row items-center justify-between">
-              <div className="relative z-50">
-                <div className="absolute    w-full ">
+        <div className="p-6 py-12 relative bg-red-600 grid grid-cols-5 text-gray-50 mx-12 rounded-3xl">
+        <div className="absolute w-[475px] left-24 bottom-0 ">
                   <Image
                     alt=""
                     src={heroDoctor}
-                    className="mt-8 h-3/4 w-full   left-0 object-contain"
+                    className="w-full left-0"
                   />
-                </div>
               </div>
+              <div className="col-span-2"></div>
+          <div className="container mx-auto col-span-3">
+            <div className="flex flex-col lg:flex-row items-center justify-between">
+
               <div className=" text-start py-2 lg:py-0">
                 <h2 className=" text-3xl tracking-tighter font-bold">
                   Lorem ipsum dolor sit amet

@@ -12,7 +12,7 @@ export interface IUser {
   bloodGroup?: string;
   allergies?: string[];
   medicalConditions?: string[];
-  medications?: string[]; 
+  medications?: string[];
   surgeries?: string[];
   mpin?: number;
   aadhar?: string;
@@ -87,7 +87,6 @@ export const UserSchema = new mongoose.Schema<IUser>(
     aadhar: {
       type: String,
     },
-    
   },
   {
     timestamps: true,
