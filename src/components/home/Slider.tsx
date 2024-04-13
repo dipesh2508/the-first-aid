@@ -16,8 +16,8 @@ const Slider = () => {
     <div>
       <section>
         <div className="mx-auto  px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
-          <div className="grid grid-cols-1 gap-y-2 gap-x-16  ">
-            <div className=" h-64 overflow-hidden rounded-lg sm:h-80 order-last lg:h-3/4 ">
+          <div className="grid grid-cols-1 justify-items-center gap-y-2 gap-x-16  ">
+            <div className="w-[845px] h-[541px]  h-64 overflow-hidden rounded-lg sm:h-80 order-last lg:h-3/4 ">
               <Swiper
                 modules={[Autoplay, Pagination]}
                 slidesPerView={1}
@@ -63,7 +63,7 @@ const Slider = () => {
             </div>
 
             <div className="lg:py-12">
-              <h2 className="text-3xl text-center font-bold sm:text-4xl">
+              <h2 className="text-3xl text-center font-normal sm:text-5xl">
                 Lorem ipsum dolor sit amet consectetur. Pharetra est viverra
                 diam et ac sit.
               </h2>
