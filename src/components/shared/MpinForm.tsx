@@ -17,15 +17,18 @@ import {
 
 import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
+import { redirect, usePathname, useRouter } from "next/navigation";
 
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
+  InputOTPSeparator
 } from "@/components/ui/input-otp";
 import { toast } from "@/components/ui/use-toast";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { updateUserMPin } from "@/lib/actions/user.actions";
 
 const FormSchema = z.object({
   pin: z.string().min(4, {
@@ -34,8 +37,14 @@ const FormSchema = z.object({
   mobile: z.boolean().default(false).optional(),
 });
 
-const MpinForm = () => {
+const MpinForm = ({userId}:{
+  userId: string;
+}) => {
   const [tick, setTick] = useState<boolean>(false);
+
+  
+  const pathname = usePathname();
+  const router = useRouter();
 
   const handleChange = (event: any) => {
     setTick(event.target.checked);
@@ -48,9 +57,9 @@ const MpinForm = () => {
     },
   });
 
-  useEffect(() => {}, [tick]);
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    await updateUserMPin(userId, data.pin, pathname);
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
     toast({
       title: "The MPIN is set successfully!",
       description: (
@@ -61,6 +70,9 @@ const MpinForm = () => {
         </pre>
       ),
     });
+
+    form.reset();
+    router.push("/user/dashboard");
   }
 
   return (
@@ -87,21 +99,20 @@ const MpinForm = () => {
             name="pin"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>One-Time Password</FormLabel>
+                <FormLabel>MPIN</FormLabel>
                 <FormControl>
                   <InputOTP maxLength={6} {...field}>
                     <InputOTPGroup>
                       <InputOTPSlot index={0} />
                       <InputOTPSlot index={1} />
+                      <InputOTPSeparator />
                       <InputOTPSlot index={2} />
                       <InputOTPSlot index={3} />
-                      <InputOTPSlot index={4} />
-                      <InputOTPSlot index={5} />
                     </InputOTPGroup>
                   </InputOTP>
                 </FormControl>
                 <FormDescription>
-                  Please enter the one-time password sent to your phone.
+                  Please enter the 4-digit MPIN to secure the account.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -111,28 +122,28 @@ const MpinForm = () => {
             control={form.control}
             name="mobile"
             render={({ field }) => (
-              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+              <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md py-2">
                 <FormControl>
                   <label
                     htmlFor="Option2"
-                    className="flex cursor-pointer items-start gap-4 rounded-lg border border-gray-200 p-4 transition hover:bg-gray-50 has-[:checked]:bg-blue-50"
+                    className="flex cursor-pointer items-start gap-4 rounded-lg p-1 transition hover:bg-gray-50 has-[:checked]:bg-blue-50"
                   >
                     <div className="flex items-center">
                       &#8203;
                       <input
                         type="checkbox"
                         checked={tick}
-                        className="size-4 rounded border-gray-300"
+                        className="size-4 rounded"
                         id="Option2"
                         onChange={handleChange}
                       />
                     </div>
                   </label>
                 </FormControl>
-                <div className="space-y-1 leading-none">
+                <div className="space-y-1 leading-none flex items-center">
                   <FormLabel>
-                    Accept the
-                    <Link href="/examples/forms">terms and conditions</Link>
+                    Accept the{" "}
+                    <Link href="/examples/forms" className="text-blue-600">Terms and Conditions</Link>
                   </FormLabel>
                 </div>
               </FormItem>
