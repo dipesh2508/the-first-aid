@@ -3,7 +3,7 @@ import { Button } from "../ui/button";
 import { Separator } from "@/components/ui/separator";
 import { menuLinks } from "@/constant/menu";
 import Link from "next/link";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/TheFirstAid.png";
 import Image from "next/image";
 const Navbar = () => {
   return (
@@ -17,7 +17,13 @@ const Navbar = () => {
               aria-label="Back to homepage"
               className="flex items-center p-2"
             >
-              <Image src={logo} alt="logo" height={50} width={50} />
+              <Image
+                src={logo}
+                alt="logo"
+                className="p-4"
+                height={200}
+                width={200}
+              />
             </Link>
             <ul className="items-stretch hidden  gap-x-8   lg:flex">
               {menuLinks.map((menu, index) => {
