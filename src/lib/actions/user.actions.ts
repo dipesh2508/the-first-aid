@@ -103,12 +103,39 @@ export async function updateUserMPin(
     throw error;
   }
 }
+
+interface IUpdateUser {
+  clerkId: string;
+  name: string;
+  email: string;
+  phone: string;
+  username: string;
+  image: string;
+  gender: string;
+  aadhar: string;
+  role: string;
+  roleType: string;
+  path: string;
+}
 // update user
-export async function updateUserProfile(params: Params) {
+export async function updateUserProfile(params: IUpdateUser) {
   try {
     connectToDB();
 
-    await User.findOneAndUpdate({ clerkId: params.clerkId }, { params });
+    await User.findOneAndUpdate(
+      { clerkId: params.clerkId },
+      {
+        name: params.name,
+        email: params.email,
+        phone: params.phone,
+        username: params.username,
+        image: params.image,
+        gender: params.gender,
+        aadhar: params.aadhar,
+        role: params.role,
+        roleType: params.roleType,
+      }
+    );
     revalidatePath(params.path);
   } catch (error: any) {
     console.log(error);
@@ -128,4 +155,4 @@ export async function findUserByUsername(username: string) {
     console.log(error);
     throw error;
   }
-} 
+}
