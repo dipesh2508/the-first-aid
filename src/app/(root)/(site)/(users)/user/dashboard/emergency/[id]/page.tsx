@@ -1,5 +1,7 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import React from "react";
+import { Scanner } from "@yudiel/react-qr-scanner";
 
 const page = () => {
   return (
@@ -26,6 +28,11 @@ const page = () => {
               <Button className="bg-slate-100 text-black">
                 It’s an emergency for <span className="text-primary-5">ME</span>
               </Button>
+              <Scanner
+                enabled
+                onResult={(text, result) => console.log(text, result)}
+                onError={(error) => console.log(error?.message)}
+              />
             </div>
           </div>
         </div>
