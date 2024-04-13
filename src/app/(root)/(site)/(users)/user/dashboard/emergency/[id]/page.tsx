@@ -24,15 +24,15 @@ const page = () => {
             <p className="mt-4 text-gray-600">
               To ensure the most appropriate and timely assistance is provided.
             </p>
-            <div className="mt-11">
+            <div className="mt-11 grid grid-cols-1 gap-4">
               <Button className="bg-slate-100 text-black">
-                It’s an emergency for <span className="text-primary-5">ME</span>
+                It’s an emergency for{" "}
+                <span className="text-primary-5"> ME</span>
               </Button>
-              <Scanner
-                enabled
-                onResult={(text, result) => console.log(text, result)}
-                onError={(error) => console.log(error?.message)}
-              />
+              <Button className="bg-slate-100 text-black">
+                It’s an emergency for{" "}
+                <span className="text-primary-5"> SOMEONE ELSE</span>
+              </Button>
             </div>
           </div>
         </div>
