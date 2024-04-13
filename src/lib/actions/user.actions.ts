@@ -4,6 +4,16 @@ import { User, IUser } from "../models/user.model";
 import { revalidatePath } from "next/cache";
 import { connectToDB } from "../mongoose";
 
+export async function fetchUser(userId: string) {
+  try {
+    connectToDB();
+
+    return await User.findOne({ id: userId });
+  } catch (error: any) {
+    throw new Error(`Failed to fetch user: ${error.message}`);
+  }
+}
+
 interface IcreateUser {
   clerkId: string;
   name: string;
@@ -110,11 +120,8 @@ interface IUpdateUser {
   email: string;
   phone: string;
   username: string;
-  image: string;
   gender: string;
   aadhar: string;
-  role: string;
-  roleType: string;
   path: string;
 }
 // update user
@@ -129,11 +136,8 @@ export async function updateUserProfile(params: IUpdateUser) {
         email: params.email,
         phone: params.phone,
         username: params.username,
-        image: params.image,
         gender: params.gender,
         aadhar: params.aadhar,
-        role: params.role,
-        roleType: params.roleType,
       }
     );
     revalidatePath(params.path);
