@@ -21,7 +21,7 @@ const About = () => {
               />
               <CardFooter className="w-full absolute bottom-0">
                 <div className="grid w-full grid-cols-1 justify-items-center">
-                  <p className="text-3xl rounded-sm  px-4 py-3  bg-gray-900/30 text-center text-white">
+                  <p className="hidden lg:block text-3xl rounded-sm  px-4 py-3  bg-gray-900/30 text-center text-white">
                     Lorem ipsum dolor sit amet
                   </p>
                   <div className="flex mt-4 justify-center">
@@ -34,7 +34,7 @@ const About = () => {
             </Card>
 
             <div className="">
-              <h2 className="text-3xl font-normal sm:text-5xl">
+              <h2 className="text-3xl font-bold sm:text-5xl">
                 Lorem ipsum dolor sit amet consectetur. Pharetra est viverra
                 diam et ac sit.
               </h2>

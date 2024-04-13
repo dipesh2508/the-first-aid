@@ -38,17 +38,17 @@ const Hero = () => {
         </div>
       </div>
       <div className="p-6 py-8 relative bg-red-600 grid grid-cols-5 text-gray-50 mx-12 rounded-3xl">
-        <div className="absolute w-[475px] left-24 bottom-0 ">
+        <div className="lg:absolute w-[475px] left-24 bottom-0 ">
           <Image alt="" src={heroDoctor} className="w-full left-0" />
         </div>
         <div className="col-span-2"></div>
         <div className="container mx-auto col-span-3">
           <div className="flex flex-col lg:flex-row items-center justify-between">
             <div className=" text-start py-2 lg:py-0 flex flex-col gap-3">
-              <h2 className=" text-3xl tracking-tighter font-bold">
+              <h2 className=" lg:text-3xl tracking-tighter font-bold">
                 Lorem ipsum dolor sit amet
               </h2>
-              <p className="text-lg font-normal">
+              <p className="lg:text-lg font-normal">
                 Lorem ipsum dolor sit amet consectetur. Mattis montes
                 <br />
                 suspendisse urna urna sit. Consectetur donec sapien vestibulum :

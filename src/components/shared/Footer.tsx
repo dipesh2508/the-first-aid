@@ -10,8 +10,8 @@ import { SiInstagram } from "react-icons/si";
 
 const Footer = () => {
   return (
-    <footer className="h-72 w-full bg-primary-9 p-14 text-white">
-      <div className="flex gap-x-72">
+    <footer className="h-full lg:h-72 w-full bg-primary-9 p-14 text-white">
+      <div className="flex lg:flex-row  gap-x-8 lg:gap-x-72">
         <div className="rounded-md  p-4">
           <Link href="/" className="flex items-center">
             <Image
@@ -24,7 +24,7 @@ const Footer = () => {
           </Link>
         </div>
 
-        <div className="flex gap-x-52">
+        <div className="flex flex-col lg:flex-row gap-y-2 lg:gap-x-52">
           <div className="flex items-center">
             <ul className="font-primary text-base font-light">
               <li className="mb-4">
@@ -55,14 +55,14 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="mt-6 flex justify-between">
+      <div className="mt-6 flex lg:flex-row flex-col-reverse gap-2 justify-center items-center  lg:justify-between">
         <div className="flex items-center">
           <p className="font-primary text-xs font-light">
             © 2024 The First Aid All rights reserved
           </p>
         </div>
 
-        <div className="flex gap-x-4">
+        <div className="flex gap-x-1 lg:gap-x-4">
           <Link href="/">
             <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary-6 hover:bg-primary-7">
               <FaXTwitter />

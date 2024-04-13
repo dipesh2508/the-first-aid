@@ -6,9 +6,9 @@ const CTA = () => {
     <>
       <section>
         <div className="   py-8  sm:py-12  lg:py-16">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 ">
-            <div className="lg:py-24 px-12">
-              <h2 className="text-3xl font-normal sm:text-5xl">
+          <div className="grid grid-cols-1 gap-2 lg:gap-8 lg:grid-cols-2 ">
+            <div className="lg:py-24 px-4  py-8 lg:px-12">
+              <h2 className="text-3xl font-bold lg:font-normal sm:text-5xl">
                 Lorem ipsum dolor sit amet consectetur. Pharetra est viverra
               </h2>
 
@@ -26,8 +26,8 @@ const CTA = () => {
                 Sign up
               </Link>
             </div>
-            <div className="lg:py-24  px-12 bg-primary-1">
-              <h2 className="text-3xl font-normal sm:text-5xl">
+            <div className="lg:py-24 px-4  py-8 lg:px-12 bg-primary-1">
+              <h2 className="text-3xl font-bold lg:font-normal sm:text-5xl">
                 Lorem ipsum dolor sit amet consectetur. Pharetra est viverra
               </h2>
 

@@ -1,9 +1,8 @@
 import ProfileCard from "@/components/userDashboard/ProfileCard";
 import { userLinksEmergency, userLinksProfile } from "@/constant/dashboard";
 import React from "react";
-import { FaRegCircleUser } from "react-icons/fa6";
 
-const page = () => {
+const Page = () => {
   return (
     <>
       <section className="min-h-screen mx-24 my-8 ">
@@ -56,4 +55,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

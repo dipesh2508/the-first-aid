@@ -5,10 +5,10 @@ import { Separator } from "../ui/separator";
 
 const Stats = () => {
   return (
-    <section className="bg-primary-6 mx-12 rounded-lg">
+    <section className="bg-primary-6 lg:mx-12 rounded-lg">
       <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-16 lg:py-16">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16">
-          <div className="relative h-64 overflow-hidden rounded-lg sm:h-80 lg:order-last lg:h-full">
+          <div className="relative h-64 overflow-hidden rounded-lg sm:h-80 order-last lg:h-full">
             <Image
               width="443"
               height="520"
@@ -19,18 +19,18 @@ const Stats = () => {
           </div>
 
           <div className="lg:py-24 ">
-            <h2 className="text-3xl text-white font-normal sm:text-4xl">
+            <h2 className="text-3xl font-bold text-white lg:font-normal sm:text-4xl">
               Lorem ipsum dolor sit amet consectetur. Pharetra est viverra diam{" "}
             </h2>
 
-            <p className="mt-4 text-white">
+            <p className="mt-4  text-white">
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut qui
               hic atque tenetur quis eius quos ea neque sunt, accusantium soluta
               minus veniam tempora deserunt? Molestiae eius quidem quam
               repellat.
             </p>
 
-            <div className="flex  h-5 items-start flex-1 justify-evenly text-white mt-11   text-3xl">
+            <div className="flex  h-5 items-start flex-1 justify-evenly text-white max-sm:my-4 lg:mt-11   text-3xl">
               <div className="flex flex-col justify-start">
                 <p className="">234</p>
                 <p className="text-xs ">Lorem</p>
