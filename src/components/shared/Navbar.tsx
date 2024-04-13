@@ -36,12 +36,12 @@ const Navbar = () => {
             </ul>
           </div>
           <div className="items-center flex-shrink-0 hidden  gap-2 lg:flex">
-            <Button variant={"secondary"} className="font-light">
+            <Button variant={"ghost"} className="font-light">
               For Doctors
             </Button>
             <Separator orientation="vertical" className="h-8 w-[3px]" />
 
-            <Button className="border-primary-4 hover:bg-primary-5 border bg-transparent  px-8  h-fit font-normal text-black hover:text-black hover:border-primary-5">
+            <Button className="border-primary-4 hover:bg-transparent border bg-transparent  px-8  h-fit font-normal text-black hover:text-black hover:border-primary-5">
               Log In
             </Button>
             <Button className="font-normal px-8 bg-primary-4 hover:bg-primary-5  h-fit">
