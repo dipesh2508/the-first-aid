@@ -35,18 +35,20 @@ const FormSchema = z.object({
 });
 
 const MpinForm = () => {
-  const [tick, setTick] = useState(true);
-  
+  const [tick, setTick] = useState<boolean>(false);
+
+  const handleChange = (event: any) => {
+    setTick(event.target.checked);
+  };
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       pin: "",
-      mobile: false,
+      mobile: tick,
     },
   });
 
-  useEffect(() => {
-  }, [tick]);
+  useEffect(() => {}, [tick]);
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     toast({
@@ -62,7 +64,7 @@ const MpinForm = () => {
   }
 
   return (
-    <div className="flex flex-col items-center h-max py-16 justify-center gap-16 px-16">
+    <div className="flex flex-col items-center h-screen py-16 justify-center gap-16 px-16">
       <div className="text-center w-full text-lg font-serif">
         <h2>SET SECURITY PIN</h2>
       </div>
@@ -111,14 +113,21 @@ const MpinForm = () => {
             render={({ field }) => (
               <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                 <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    //set the value of the checkbox to the value of the field
-                    
-                    onCheckedChange={field.onChange}
-                    //set the value of the field to the value of the checkbox
-                    onChange={() => {setTick(!tick); console.log(tick)}}
-                  />
+                  <label
+                    htmlFor="Option2"
+                    className="flex cursor-pointer items-start gap-4 rounded-lg border border-gray-200 p-4 transition hover:bg-gray-50 has-[:checked]:bg-blue-50"
+                  >
+                    <div className="flex items-center">
+                      &#8203;
+                      <input
+                        type="checkbox"
+                        checked={tick}
+                        className="size-4 rounded border-gray-300"
+                        id="Option2"
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </label>
                 </FormControl>
                 <div className="space-y-1 leading-none">
                   <FormLabel>
@@ -130,7 +139,9 @@ const MpinForm = () => {
             )}
           />
 
-          <Button type="submit" disabled={}>Submit</Button>
+          <Button type="submit" disabled={!tick}>
+            Submit
+          </Button>
         </form>
       </Form>
     </div>
