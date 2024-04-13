@@ -4,7 +4,16 @@ import { User, IUser } from "../models/user.model";
 import { revalidatePath } from "next/cache";
 import { connectToDB } from "../mongoose";
 
-export async function createUser(userData: Partial<IUser>) {
+interface IcreateUser {
+  clerkId: string;
+  name: string;
+  username: string;
+  email: string;
+  image: string;
+  phone: string;
+}
+
+export async function createUser(userData: IcreateUser) {
   try {
     connectToDB();
 
