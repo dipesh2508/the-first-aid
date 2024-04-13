@@ -7,6 +7,8 @@ interface IAppointment {
   date: string;
   time: string;
   status: string;
+  appointmentType: string;
+  emergencyType?: string;
 }
 
 const appointmentSchema = new mongoose.Schema<IAppointment>(
@@ -36,6 +38,17 @@ const appointmentSchema = new mongoose.Schema<IAppointment>(
       required: true,
       enum: ["pending", "approved", "rejected"],
       default: "pending",
+    },
+    appointmentType: {
+      type: String,
+      required: true,
+      enum: ["emergency", "normal"],
+      default: "normal",
+    },
+    emergencyType: {
+      type: String,
+      required: false,
+      enum: ["accident", "heart attack", "stroke", "others"],
     },
   },
   { timestamps: true }

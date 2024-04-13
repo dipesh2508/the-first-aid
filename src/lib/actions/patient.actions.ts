@@ -5,6 +5,7 @@ import { User } from "../models/user.model";
 import { Doctor } from "../models/doctor.model";
 import { Appointment } from "../models/appointment.model";
 import { Hospital } from "../models/hospital.model";
+import { StyledString } from "next/dist/build/swc";
 
 interface Params {
   clerkId: string;
@@ -57,6 +58,7 @@ interface IAppointment {
   date: string;
   time: string;
   status: string;
+  appointmentType: string;
 }
 export async function addAppointment(params: IAppointment) {
   try {
