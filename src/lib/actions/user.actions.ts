@@ -88,6 +88,22 @@ export async function deleteUser(params: DeleteUserParams) {
   }
 }
 
+// update user mpin
+export async function updateUserMPin(
+  userId: string,
+  mpin: string,
+  path: string
+) {
+  try {
+    connectToDB();
+
+    await User.findOneAndUpdate({ clerkId: userId }, { mpin });
+    revalidatePath(path);
+  } catch (error: any) {
+    console.log(error);
+    throw error;
+  }
+}
 // update user
 export async function updateUserProfile(params: Params) {
   try {
