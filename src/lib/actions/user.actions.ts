@@ -116,3 +116,17 @@ export async function updateUserProfile(params: Params) {
     throw error;
   }
 }
+
+// find user by username
+export async function findUserByUsername(username: string) {
+  try {
+    connectToDB();
+
+    const user = await User.findOne({ username });
+    if (!user) return null;
+    return user;
+  } catch (error: any) {
+    console.log(error);
+    throw error;
+  }
+} 
