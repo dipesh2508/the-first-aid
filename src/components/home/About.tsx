@@ -11,9 +11,9 @@ const About = () => {
       <section className="lg:my-24 ">
         <div className="mx-auto  px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
           <div className="grid grid-cols-1 gap-8 content-center lg:grid-cols-2 lg:gap-16">
-            <Card className="relative max-h-96  bg-primary-5">
+            <Card className="relative max-h-96  border-none shadow-none">
               <Image
-                src={imgLink}
+                src="https://images.unsplash.com/photo-1631217871099-88310a909a32?q=80&w=1526&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 width={520}
                 height={442}
                 className="-z-10  object-contain size-full"

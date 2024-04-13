@@ -10,6 +10,7 @@ import "swiper/css/pagination";
 // import required modules
 import { Autoplay, Pagination } from "swiper/modules";
 import Image from "next/image";
+import { sliderImage } from "@/constant/image";
 
 const Slider = () => {
   return (
@@ -31,33 +32,19 @@ const Slider = () => {
               }}
               className="mySwiper "
             >
-              <SwiperSlide>
-                <Image
-                  width={500}
-                  height={500}
-                  src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8"
-                  className=" inset-0 size-64 object-cover"
-                  alt="..."
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <Image
-                  width={500}
-                  height={500}
-                  src="https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-                  className=" inset-0 size-64 object-cover"
-                  alt="..."
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <Image
-                  width={500}
-                  height={500}
-                  src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8"
-                  className=" inset-0 size-64 object-cover"
-                  alt="..."
-                />
-              </SwiperSlide>
+              {sliderImage.map((menu, index) => {
+                return (
+                  <SwiperSlide key={menu.title}>
+                    <Image
+                      width={500}
+                      height={500}
+                      src={menu.link}
+                      className=" inset-0 size-64 object-cover"
+                      alt="..."
+                    />
+                  </SwiperSlide>
+                );
+              })}
             </Swiper>
           </div>
 
