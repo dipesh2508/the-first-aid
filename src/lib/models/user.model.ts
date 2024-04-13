@@ -87,7 +87,6 @@ export const UserSchema = new mongoose.Schema<IUser>(
     aadhar: {
       type: String,
     },
-    
   },
   {
     timestamps: true,
