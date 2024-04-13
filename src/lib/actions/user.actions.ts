@@ -100,21 +100,3 @@ export async function updateUserProfile(params: Params) {
     throw error;
   }
 }
-
-export async function checkIfNominee(patientId: string, currUser: string) {
-  try {
-    connectToDB();
-
-    const patient = await User.findById(patientId);
-    if (!patient) {
-      throw new Error("Patient not found");
-    }
-
-    const isNominee = patient.nominees.includes(currUser);
-    return isNominee;
-  } catch (error: any) {
-    console.log(error);
-    throw error;
-  }
-}
-

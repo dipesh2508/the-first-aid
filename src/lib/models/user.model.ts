@@ -7,15 +7,10 @@ export interface IUser {
   phone: string;
   username: string;
   image: string;
-  nominees: string[];
-  emergencyContacts: string[];
-  bloodGroup?: string;
-  allergies?: string[];
-  medicalConditions?: string[];
-  medications?: string[];
-  surgeries?: string[];
   mpin?: number;
   aadhar?: string;
+  role: mongoose.Schema.Types.ObjectId;
+  roleType: string;
 }
 
 export const UserSchema = new mongoose.Schema<IUser>(
@@ -47,45 +42,20 @@ export const UserSchema = new mongoose.Schema<IUser>(
       type: String,
       required: true,
     },
-    nominees: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
-    emergencyContacts: [
-      {
-        type: String,
-      },
-    ],
-    bloodGroup: {
-      type: String,
-    },
-    allergies: [
-      {
-        type: String,
-      },
-    ],
-    medicalConditions: [
-      {
-        type: String,
-      },
-    ],
-    medications: [
-      {
-        type: String,
-      },
-    ],
-    surgeries: [
-      {
-        type: String,
-      },
-    ],
     mpin: {
       type: Number,
     },
     aadhar: {
       type: String,
+    },
+    role: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Patient" || "Doctor",
+    },
+    roleType: {
+      type: String,
+      required: true,
+      enum: ["doctor", "patient"],
     },
   },
   {
