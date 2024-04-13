@@ -19,7 +19,7 @@ const appointmentSchema = new mongoose.Schema<IAppointment>(
     },
     doctor: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Doctor",
+      ref: "User",
     },
     hospital: {
       type: mongoose.Schema.Types.ObjectId,

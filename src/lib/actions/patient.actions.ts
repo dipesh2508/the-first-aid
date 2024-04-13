@@ -53,21 +53,45 @@ export async function checkIfNominee(patientId: string, currUser: string) {
 
 interface IAppointment {
   patient: string;
-  doctor: string;
+  doctor: string | null;
   hospital: string;
   date: string;
   time: string;
   status: string;
   appointmentType: string;
+  emergencyType: string;
 }
 export async function addAppointment(params: IAppointment) {
   try {
     connectToDB();
     const newAppointment = await Appointment.create(params);
+    if (!params.doctor) {
+      throw new Error("Doctor id is null in addApointment function");
+    }
     const doctor = await Doctor.findOne({ clerkId: params.doctor });
     doctor.patients.push(params.patient);
     const hospital = await Hospital.findOne({ clerkId: params.hospital });
     hospital.patients.push(params.patient);
+    return newAppointment;
+  } catch (error: any) {
+    console.log(error);
+    throw error;
+  }
+}
+
+// raise a appointment
+export async function raiseAppointment(params: IAppointment) {
+  try {
+    connectToDB();
+    const newAppointment = await Appointment.create({
+      patient: params.patient,
+      hospital: params.hospital,
+      date: params.date,
+      time: params.time,
+      status: "pending",
+      appointmentType: params.appointmentType,
+      emergencyType: params.emergencyType,
+    });
     return newAppointment;
   } catch (error: any) {
     console.log(error);
@@ -81,9 +105,9 @@ export async function getPatientById(patientId: string) {
     connectToDB();
     const user = await User.aggregate([
       {
-        $match:{
+        $match: {
           clerkId: patientId,
-        }
+        },
       },
       {
         $lookup: {
