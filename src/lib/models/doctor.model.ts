@@ -1,24 +1,20 @@
 import mongoose from "mongoose";
 
-export interface IUser {
+export interface IDoctor {
   clerkId: string;
   name: string;
   email: string;
   phone: string;
   username: string;
   image: string;
-  nominees: string[];
-  emergencyContacts: string[];
-  bloodGroup?: string;
-  allergies?: string[];
-  medicalConditions?: string[];
-  medications?: string[];
-  surgeries?: string[];
+  specializations: string[];
+  hospitals: string[];
+  patients: string[];
   mpin?: number;
   aadhar?: string;
 }
 
-export const UserSchema = new mongoose.Schema<IUser>(
+const DoctorSchema = new mongoose.Schema<IDoctor>(
   {
     clerkId: {
       type: String,
@@ -47,38 +43,21 @@ export const UserSchema = new mongoose.Schema<IUser>(
       type: String,
       required: true,
     },
-    nominees: [
+    specializations: [
+      {
+        type: String,
+      },
+    ],
+    hospitals: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Hospital",
+      },
+    ],
+    patients: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-      },
-    ],
-    emergencyContacts: [
-      {
-        type: String,
-      },
-    ],
-    bloodGroup: {
-      type: String,
-    },
-    allergies: [
-      {
-        type: String,
-      },
-    ],
-    medicalConditions: [
-      {
-        type: String,
-      },
-    ],
-    medications: [
-      {
-        type: String,
-      },
-    ],
-    surgeries: [
-      {
-        type: String,
       },
     ],
     mpin: {
@@ -87,11 +66,9 @@ export const UserSchema = new mongoose.Schema<IUser>(
     aadhar: {
       type: String,
     },
-    
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
-export const User = mongoose.models.User || mongoose.model("User", UserSchema);
+export const Doctor =
+  mongoose.models.Doctor || mongoose.model("Doctor", DoctorSchema);
