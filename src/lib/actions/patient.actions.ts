@@ -74,3 +74,32 @@ export async function addAppointment(params: IAppointment) {
     throw error;
   }
 }
+
+//fetch patient by patient id
+export async function getPatientById(patientId: string) {
+  try {
+    connectToDB();
+    const user = await User.aggregate([
+      {
+        $match:{
+          clerkId: patientId,
+        }
+      },
+      {
+        $lookup: {
+          from: "patients",
+          localField: "role",
+          foreignField: "_id",
+          as: "patient",
+        },
+      },
+    ]);
+    if (!user) {
+      throw new Error("Patient not found");
+    }
+    return user;
+  } catch (error: any) {
+    console.log(error);
+    throw error;
+  }
+}
