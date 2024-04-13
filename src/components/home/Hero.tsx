@@ -8,7 +8,6 @@ import { GoChevronRight } from "react-icons/go";
 
 const Hero = () => {
   return (
-    <>
       <section>
         <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-10">
           <div className="grid grid-cols-1 lg:grid-cols-2">
@@ -82,7 +81,6 @@ const Hero = () => {
           </div>
         </div>
       </section>
-    </>
   );
 };
 
