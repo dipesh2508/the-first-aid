@@ -8,8 +8,8 @@ import Link from "next/link";
 const About = () => {
   return (
     <>
-      <section className="lg:py-24">
-        <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
+      <section className="lg:my-24 ">
+        <div className="mx-auto  px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
           <div className="grid grid-cols-1 gap-8 content-center lg:grid-cols-2 lg:gap-16">
             <Card className="relative max-h-96  bg-primary-5">
               <Image
