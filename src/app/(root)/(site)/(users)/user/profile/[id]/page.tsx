@@ -32,7 +32,7 @@ const page = async ({params}:{
             Personal Information
           </h3>
           <Link
-            href="/profile/edit"
+            href="/user/profile/edit"
             className="border p-3 rounded-md shadow-xl"
           >
             <FaRegEdit size={18} />
