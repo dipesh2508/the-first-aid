@@ -62,7 +62,7 @@ export const userLinksEmergency: userLinks[] = [
   {
     title: "Fill Form Instantly",
     name: "Fill in a Flash, Focus on Getting Better",
-    link: "/user/emergency",
+    link: "/user/dashboard/emergency",
     linkText: "Fill Form",
     Icon: PiNotepadBold,
     isReversed: false,
