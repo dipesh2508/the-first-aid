@@ -54,7 +54,7 @@ export const userLinksEmergency: userLinks[] = [
   {
     title: "Remote consent",
     name: "Grant consent, at your convenience",
-    link: "#",
+    link: "/user/consent",
     linkText: "Grant",
     Icon: FaRegCheckCircle,
     isReversed: false,
@@ -62,7 +62,7 @@ export const userLinksEmergency: userLinks[] = [
   {
     title: "Fill Form Instantly",
     name: "Fill in a Flash, Focus on Getting Better",
-    link: "#",
+    link: "/user/emergency",
     linkText: "Fill Form",
     Icon: PiNotepadBold,
     isReversed: false,
