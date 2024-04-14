@@ -1,3 +1,4 @@
+"use server";
 import { revalidatePath } from "next/cache";
 import { Patient } from "../models/patient.model";
 import { connectToDB } from "../mongoose";
@@ -40,7 +41,7 @@ export async function updateUserProfile(clerkId: string, params: Params) {
     connectToDB();
 
     await Patient.findOneAndUpdate({ clerkId }, { params });
-    revalidatePath(params.path || '');
+    revalidatePath(params.path || "");
   } catch (error: any) {
     console.log(error);
     throw error;

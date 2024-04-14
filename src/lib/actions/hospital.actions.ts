@@ -1,3 +1,4 @@
+"use server";
 import { Hospital } from "../models/hospital.model";
 import { connectToDB } from "../mongoose";
 
