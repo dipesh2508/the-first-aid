@@ -14,7 +14,7 @@ interface Params {
 }
 
 // update patient
-export async function updateUserProfile(params: Params) {
+export async function updateDoctorProfile(params: Params) {
   try {
     connectToDB();
 

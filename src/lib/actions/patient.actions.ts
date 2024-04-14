@@ -19,10 +19,10 @@ interface Params {
 }
 
 //create a patient
-export async function createPatient(clerkId: string, params: Params) {
+export async function createPatient(clerkId: string) {
   try {
     connectToDB();
-    const newPatient = await Patient.create(params);
+    const newPatient = await Patient.create({clerkId});
     const user = await User.findOne({ clerkId });
     user.role = newPatient._id;
     user.roleType = "patient";
@@ -35,7 +35,7 @@ export async function createPatient(clerkId: string, params: Params) {
 }
 
 // update patient
-export async function updateUserProfile(clerkId: string, params: Params) {
+export async function updatePatientProfile(clerkId: string, params: Params) {
   try {
     connectToDB();
 

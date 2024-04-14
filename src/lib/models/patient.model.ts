@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 export interface IPatient {
+  clerkId: string;
   nominees: string[];
   emergencyContacts: string[];
   bloodGroup?: string;
@@ -12,6 +13,10 @@ export interface IPatient {
 
 const PatientSchema = new mongoose.Schema<IPatient>(
   {
+    clerkId: {
+      type: String,
+      required: true,
+    },
     nominees: [
       {
         type: mongoose.Schema.Types.ObjectId,
