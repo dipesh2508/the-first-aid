@@ -46,13 +46,16 @@ const Navbar = () => {
               For Doctors
             </Button>
             <Separator orientation="vertical" className="h-8 w-[3px]" />
-
-            <Button className="border-primary-4 hover:bg-transparent border bg-transparent  px-8  h-fit font-normal text-black hover:text-black hover:border-primary-5">
-              Log In
-            </Button>
-            <Button className="font-normal px-8 bg-primary-4 hover:bg-primary-5  h-fit">
-              Sign Up
-            </Button>
+            <Link href="/sign-in">
+              <Button className="border-primary-4 hover:bg-transparent border bg-transparent  px-8  h-fit font-normal text-black hover:text-black hover:border-primary-5">
+                Log In
+              </Button>
+            </Link>
+            <Link href="/sign-in">
+              <Button className="font-normal px-8 bg-primary-4 hover:bg-primary-5  h-fit">
+                Sign Up
+              </Button>
+            </Link>
           </div>
         </div>
       </header>
