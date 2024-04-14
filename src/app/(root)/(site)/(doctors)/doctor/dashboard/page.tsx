@@ -190,7 +190,7 @@ const Page = () => {
           </div>
         </div>
         <div className="grid grid-cols-1 ">
-          <DataTable data={data} columns={appointmentColumn} />
+          <DataTable data={data.toReversed()} columns={appointmentColumn} />
         </div>
       </section>
     </div>
