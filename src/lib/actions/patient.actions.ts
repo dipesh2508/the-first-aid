@@ -233,43 +233,6 @@ export async function getAppointmentsOfTheUser(patientId: string) {
           patient: patientId,
         },
       },
-      // Lookup patients where the current patient is a nominee
-      {
-        $lookup: {
-          from: "patients",
-          localField: "patient",
-          foreignField: "nominees",
-          as: "nomineeAppointments",
-        },
-      },
-      {
-        $unwind: {
-          path: "$nomineeAppointments",
-          preserveNullAndEmptyArrays: true,
-        },
-      },
-      {
-        $project: {
-          _id: 1,
-          patient: 1,
-          doctor: 1,
-          hospital: 1,
-          date: 1,
-          time: 1,
-          status: 1,
-          appointmentType: 1,
-          emergencyType: 1,
-          nomineeAppointments: {
-            $cond: {
-              if: {
-                $ne: ["$nomineeAppointments", null],
-              },
-              then: "$nomineeAppointments",
-              else: null,
-            },
-          },
-        },
-      },
     ]);
 
     if (!appointments) {
