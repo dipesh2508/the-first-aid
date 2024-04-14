@@ -15,7 +15,6 @@ const PatientSchema = new mongoose.Schema<IPatient>(
   {
     clerkId: {
       type: String,
-      required: true,
     },
     nominees: [
       {

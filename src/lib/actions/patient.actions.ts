@@ -6,7 +6,7 @@ import { User } from "../models/user.model";
 import { Doctor } from "../models/doctor.model";
 import { Appointment } from "../models/appointment.model";
 import { Hospital } from "../models/hospital.model";
-const { ObjectId } = mongoose.Types;
+import mongoose from "mongoose";
 
 interface Params {
   nominees?: string[];
@@ -231,15 +231,7 @@ export async function getAppointmentsOfTheUser(patientId: string) {
     const appointments = await Appointment.aggregate([
       {
         $match: {
-          patient: ObjectId(patientId),
-        },
-      },
-      {
-        $lookup: {
-          from: "patient",
-          localField: "patient",
-          foreignField: "_id",
-          as: "patients",
+          patient: new mongoose.Types.ObjectId(patientId),
         },
       },
     ]);
