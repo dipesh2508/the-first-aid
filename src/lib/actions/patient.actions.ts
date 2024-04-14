@@ -161,7 +161,7 @@ export async function getPatientById(patientId: string) {
 //verify consent
 
 export async function verifyConsent(
-  clerkId: string,
+  patientId: string,
   appointmentId: string,
   mpin: string
 ) {
@@ -174,7 +174,7 @@ export async function verifyConsent(
     const inNominee = await Patient.aggregate([
       {
         $match: {
-          clerkId,
+          _id:patientId,
         },
       },
       {
