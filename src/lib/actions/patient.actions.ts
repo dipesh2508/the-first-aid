@@ -228,13 +228,9 @@ export async function getAppointmentsOfTheUser(patientId: string) {
     // Connect to DB
     connectToDB();
 
-    const appointments = await Appointment.aggregate([
-      {
-        $match: {
-          patient: new mongoose.Types.ObjectId(patientId),
-        },
-      },
-    ]);
+    const appointments = await Appointment.find({
+      patient: patientId,
+    });
 
     if (!appointments) {
       throw new Error("No appointments found");
