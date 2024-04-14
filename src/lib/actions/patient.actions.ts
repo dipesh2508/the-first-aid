@@ -8,7 +8,6 @@ import { Hospital } from "../models/hospital.model";
 import { StyledString } from "next/dist/build/swc";
 
 interface Params {
-  clerkId: string;
   nominees?: string[];
   emergencyContacts?: string[];
   bloodGroup?: string;
@@ -16,16 +15,32 @@ interface Params {
   medicalConditions?: string[];
   medications?: string[];
   surgeries?: string[];
-  path: string;
+  path?: string;
+}
+
+//create a patient
+export async function createPatient(clerkId: string, params: Params) {
+  try {
+    connectToDB();
+    const newPatient = await Patient.create(params);
+    const user = await User.findOne({ clerkId });
+    user.role = newPatient._id;
+    user.roleType = "patient";
+    user.save();
+    return newPatient;
+  } catch (error: any) {
+    console.log(error);
+    throw error;
+  }
 }
 
 // update patient
-export async function updateUserProfile(params: Params) {
+export async function updateUserProfile(clerkId: string, params: Params) {
   try {
     connectToDB();
 
-    await Patient.findOneAndUpdate({ clerkId: params.clerkId }, { params });
-    revalidatePath(params.path);
+    await Patient.findOneAndUpdate({ clerkId }, { params });
+    revalidatePath(params.path || '');
   } catch (error: any) {
     console.log(error);
     throw error;
