@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
 import { ChangeEvent, use, useState } from "react";
-import { updateUserProfile } from "@/lib/actions/user.actions";
+import { updateUserProfile } from "@/lib/actions/patient.actions";
 import { usePathname, useRouter } from "next/navigation";
 import path from "path";
 import { patientValidation } from "@/lib/validations/patient";
@@ -25,13 +25,15 @@ import { IPatient } from "@/lib/models/patient.model";
 import { useToast } from "@/components/ui/use-toast";
 
 const PatientDetails = ({ patient }: any) => {
+  console.log(patient, "patient");
   const { toast } = useToast();
 
   const router = useRouter();
   const pathname = usePathname();
-  const form = useForm<IPatient>({
+  const form = useForm({
     resolver: zodResolver(patientValidation),
     defaultValues: {
+      clerkId: patient.clerkId,
       nominees: patient?.nominees || [], // Assuming patient is defined elsewhere
       emergencyContacts: patient?.emergencyContacts || [],
       bloodGroup: patient?.bloodGroup || "",
@@ -41,11 +43,21 @@ const PatientDetails = ({ patient }: any) => {
       surgeries: patient?.surgeries || [],
     },
   });
-  function onSubmit(values: z.infer<typeof patientValidation>) {
+  const onSubmit = async (values: z.infer<typeof patientValidation>) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    toast(working);
-  }
+    await updateUserProfile(patient.clerkId, {
+      nominees: values.nominees,
+      emergencyContacts: values.emergencyContacts,
+      bloodGroup: values.bloodGroup,
+      allergies: values.allergies,
+      medicalConditions: values.medicalConditions,
+      medications: values.medications,
+      surgeries: values.surgeries,
+      path: pathname,
+    });
+    console.log("working");
+  };
   const handleInputKeyDown = (
     e: React.KeyboardEvent<HTMLInputElement>,
     fieldName: keyof IPatient

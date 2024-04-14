@@ -1,3 +1,4 @@
+"use server"
 import { revalidatePath } from "next/cache";
 import { Doctor } from "../models/doctor.model";
 import { connectToDB } from "../mongoose";
