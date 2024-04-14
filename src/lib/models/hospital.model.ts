@@ -97,4 +97,4 @@ const HospitalSchema = new mongoose.Schema<IHospital>(
 );
 
 export const Hospital =
-  mongoose.models.Hospitals || mongoose.model("Hospital", HospitalSchema);
+  mongoose.models.Hospital || mongoose.model("Hospital", HospitalSchema);
