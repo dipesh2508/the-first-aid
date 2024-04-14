@@ -103,6 +103,7 @@ const PatientDetails = ({ patient }: any) => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col justify-start gap-4 bg-primary-1 shadow-xl px-12 py-8 rounded-lg w-full"
         >
+                  <FormLabel className="text-slate-900 font-bold text-4xl font-serif">Medical Info Edit form</FormLabel>
           <FormField
             control={form.control}
             name="nominees"
