@@ -174,7 +174,7 @@ export async function verifyConsent(
     const inNominee = await Patient.aggregate([
       {
         $match: {
-          _id:patientId,
+          _id: patientId,
         },
       },
       {
@@ -215,6 +215,68 @@ export async function addNominee(patientId: string, nomineeId: string) {
     patient.nominees.push(nomineeId);
     patient.save();
     return patient;
+  } catch (error: any) {
+    console.log(error);
+    throw error;
+  }
+}
+
+//get all appointments of the user and if the user is in any other user's nominee
+export async function getAppointmentsOfTheUser(patientId: string) {
+  try {
+    // Connect to DB
+    connectToDB();
+
+    const appointments = await Appointment.aggregate([
+      {
+        $match: {
+          patient: patientId,
+        },
+      },
+      // Lookup patients where the current patient is a nominee
+      {
+        $lookup: {
+          from: "patients",
+          localField: "patient",
+          foreignField: "nominees",
+          as: "nomineeAppointments",
+        },
+      },
+      {
+        $unwind: {
+          path: "$nomineeAppointments",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          patient: 1,
+          doctor: 1,
+          hospital: 1,
+          date: 1,
+          time: 1,
+          status: 1,
+          appointmentType: 1,
+          emergencyType: 1,
+          nomineeAppointments: {
+            $cond: {
+              if: {
+                $ne: ["$nomineeAppointments", null],
+              },
+              then: "$nomineeAppointments",
+              else: null,
+            },
+          },
+        },
+      },
+    ]);
+
+    if (!appointments) {
+      throw new Error("No appointments found");
+    }
+
+    return appointments;
   } catch (error: any) {
     console.log(error);
     throw error;
