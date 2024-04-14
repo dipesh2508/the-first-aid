@@ -5,7 +5,6 @@ import { User } from "../models/user.model";
 import { Doctor } from "../models/doctor.model";
 import { Appointment } from "../models/appointment.model";
 import { Hospital } from "../models/hospital.model";
-import { StyledString } from "next/dist/build/swc";
 
 interface Params {
   nominees?: string[];
@@ -40,7 +39,7 @@ export async function updateUserProfile(clerkId: string, params: Params) {
     connectToDB();
 
     await Patient.findOneAndUpdate({ clerkId }, { params });
-    revalidatePath(params.path || '');
+    revalidatePath(params.path || "");
   } catch (error: any) {
     console.log(error);
     throw error;
@@ -152,6 +151,52 @@ export async function getPatientById(patientId: string) {
       throw new Error("Patient not found");
     }
     return user;
+  } catch (error: any) {
+    console.log(error);
+    throw error;
+  }
+}
+
+//verify consent
+
+export async function verifyConsent(
+  clerkId: string,
+  appointmentId: string,
+  mpin: string
+) {
+  try {
+    connectToDB();
+    const appointment = await Appointment.findById(appointmentId);
+    if (!appointment) {
+      throw new Error("Appointment not found");
+    }
+    const inNominee = await Patient.aggregate([
+      {
+        $match: {
+          clerkId,
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "nominees",
+          foreignField: "_id",
+          as: "nominee",
+        },
+      },
+      {
+        $match: {
+          "nominee.mpin": mpin,
+        },
+      },
+    ]);
+
+    if (inNominee.length > 0) {
+      appointment.status = "approved";
+      appointment.save();
+    }
+
+    return appointment;
   } catch (error: any) {
     console.log(error);
     throw error;
