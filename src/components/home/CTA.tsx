@@ -9,7 +9,7 @@ const CTA = () => {
           <div className="grid grid-cols-1 gap-2 lg:gap-8 lg:grid-cols-2 ">
             <div className="lg:py-24 px-4  py-8 lg:px-12">
               <h2 className="text-3xl font-bold lg:font-normal sm:text-5xl">
-              Don't wait for emergencies. Take control.
+              {"Don't wait for emergencies. Take control."}
               </h2>
 
               <p className="mt-4 text-gray-600">
@@ -25,7 +25,7 @@ const CTA = () => {
             </div>
             <div className="lg:py-24 px-4  py-8 lg:px-12 bg-primary-1">
               <h2 className="text-3xl font-bold lg:font-normal sm:text-5xl">
-              Don't just treat patients, empower them.
+                {"Don't just treat patients, empower them."}
               </h2>
 
               <p className="mt-4 text-gray-600">
