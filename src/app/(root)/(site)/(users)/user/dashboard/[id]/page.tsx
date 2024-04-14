@@ -2,7 +2,11 @@ import ProfileCard from "@/components/userDashboard/ProfileCard";
 import { userLinksEmergency, userLinksProfile } from "@/constant/dashboard";
 import React from "react";
 
-const Page = () => {
+const Page = ({params}: 
+  {params: any}
+) => {
+
+  const { id } = params;
   return (
     <>
       <section className="min-h-screen mx-24 my-8 ">
