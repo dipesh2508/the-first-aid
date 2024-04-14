@@ -9,12 +9,16 @@ import { redirect } from "next/navigation";
 
 const Page = async () => {
   const user = await currentUser();
-  if (!user) return null;
+  if (!user) {
+    redirect("/sign-in");
+  }
 
   const userData = await fetchUser(user.id);
-  if (!userData) return null;
+  if (!userData) {
+    return null;
+  }
 
-  if (!userData.mpin) {
+  if (!userData?.mpin) {
     redirect("/mpin-setup");
   }
 
@@ -30,9 +34,9 @@ const Page = async () => {
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <ProfileCard
-            title="profile"
-            name="Kislay"
-            link="#"
+            title="Profile"
+            name={userData?.name || ""}
+            link={`/user/profile/${userData?._id}`}
             linkText="Visit Profile"
             Icon={FaRegCircleUser}
             isReversed={false}
@@ -40,7 +44,7 @@ const Page = async () => {
           <ProfileCard
             title="Beneficiary"
             name="Keep your family informed, always"
-            link="#"
+            link="/user/beneficiaries"
             linkText="Add Beneficiaries"
             Icon={FaUserPlus}
             isReversed={true}

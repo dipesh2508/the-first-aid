@@ -3,8 +3,6 @@
 import { User, IUser } from "../models/user.model";
 import { revalidatePath } from "next/cache";
 import { connectToDB } from "../mongoose";
-import { createPatient } from "./patient.actions";
-import { Patient } from "../models/patient.model";
 
 export async function fetchUser(userId: string) {
   try {
@@ -12,6 +10,17 @@ export async function fetchUser(userId: string) {
 
     return await User.findOne({ id: userId });
   } catch (error: any) {
+    throw new Error(`Failed to fetch user: ${error.message}`);
+  }
+}
+
+export async function fetchUserById(userId: string) {
+  try {
+    connectToDB();
+
+    return await User.findById(userId);
+  }
+  catch (error: any) {
     throw new Error(`Failed to fetch user: ${error.message}`);
   }
 }
@@ -29,7 +38,6 @@ export async function createUser(userData: IcreateUser) {
   try {
     connectToDB();
     const newUser = await User.create(userData);
-    createPatient(newUser.clerkId);
     return newUser;
   } catch (error) {
     console.log(error);
@@ -48,10 +56,7 @@ export async function updateUser(params: Params) {
     connectToDB();
 
     const { clerkId, updateData, path } = params;
-    const patientExist = await Patient.findOne({ clerkId });
-    if (!patientExist) {
-      createPatient(clerkId);
-    }
+
     await User.findOneAndUpdate({ clerkId }, updateData, {
       new: true,
     });

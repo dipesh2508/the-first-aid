@@ -19,10 +19,10 @@ interface Params {
 }
 
 //create a patient
-export async function createPatient(clerkId: string) {
+export async function createPatient(clerkId: string, params: Params) {
   try {
     connectToDB();
-    const newPatient = await Patient.create({clerkId});
+    const newPatient = await Patient.create(params);
     const user = await User.findOne({ clerkId });
     user.role = newPatient._id;
     user.roleType = "patient";
@@ -35,7 +35,7 @@ export async function createPatient(clerkId: string) {
 }
 
 // update patient
-export async function updatePatientProfile(clerkId: string, params: Params) {
+export async function updateUserProfile(clerkId: string, params: Params) {
   try {
     connectToDB();
 
@@ -114,25 +114,40 @@ export async function raiseAppointment(params: IAppointment) {
   }
 }
 
+// //fetch patient by patient id
+// export async function getPatientById(patientId: string) {
+//   try {
+//     connectToDB();
+//     const user = await User.aggregate([
+//       {
+//         $match: {
+//           clerkId: patientId,
+//         },
+//       },
+//       {
+//         $lookup: {
+//           from: "patients",
+//           localField: "role",
+//           foreignField: "_id",
+//           as: "patient",
+//         },
+//       },
+//     ]);
+//     if (!user) {
+//       throw new Error("Patient not found");
+//     }
+//     return user;
+//   } catch (error: any) {
+//     console.log(error);
+//     throw error;
+//   }
+// }
+
 //fetch patient by patient id
 export async function getPatientById(patientId: string) {
   try {
     connectToDB();
-    const user = await User.aggregate([
-      {
-        $match: {
-          clerkId: patientId,
-        },
-      },
-      {
-        $lookup: {
-          from: "patients",
-          localField: "role",
-          foreignField: "_id",
-          as: "patient",
-        },
-      },
-    ]);
+    const user = await Patient.findById(patientId);
     if (!user) {
       throw new Error("Patient not found");
     }
