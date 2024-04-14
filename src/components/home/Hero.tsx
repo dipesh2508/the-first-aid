@@ -21,11 +21,7 @@ const Hero = () => {
             </h2>
 
             <p className="mt-8 text-gray-600">
-              Lorem ipsum dolor sit amet consectetur. Mattis montes suspendisse
-              urna urna sit. Consectetur donec sapien vestibulum fermentum amet
-              suspendisse arcu. Quam dictum adipiscing viverra facilisis nec.
-              Adipiscing molestie nibh egestas molestie aenean dignissim ac
-              pellentesque.
+            Turn panic into peace of mind. The First Aid app empowers you with fast, efficient emergency response and keeps your loved ones informed. We bridge the gap between critical moments and expert care. Get connected to the right people, instantly, for peace of mind when it matters most. Be prepared. Be in control. 
             </p>
 
             <Link
@@ -46,12 +42,11 @@ const Hero = () => {
           <div className="flex flex-col lg:flex-row items-center justify-between">
             <div className=" text-start py-2 lg:py-0 flex flex-col gap-3">
               <h2 className=" lg:text-3xl tracking-tighter font-bold">
-                Lorem ipsum dolor sit amet
+                Empowering you during emergencies
               </h2>
               <p className="lg:text-lg font-normal">
-                Lorem ipsum dolor sit amet consectetur. Mattis montes
-                <br />
-                suspendisse urna urna sit. Consectetur donec sapien vestibulum :
+              The First Aid app equips you with the tools and information <br></br>to navigate emergencies confidently.
+                
               </p>
               <div className="flex gap-4">
                 <div className="bg-primary-7 rounded">
