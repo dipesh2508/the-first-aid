@@ -6,6 +6,7 @@ import { User } from "../models/user.model";
 import { Doctor } from "../models/doctor.model";
 import { Appointment } from "../models/appointment.model";
 import { Hospital } from "../models/hospital.model";
+const { ObjectId } = mongoose.Types;
 
 interface Params {
   nominees?: string[];
@@ -230,7 +231,7 @@ export async function getAppointmentsOfTheUser(patientId: string) {
     const appointments = await Appointment.aggregate([
       {
         $match: {
-          patient: patientId,
+          patient: ObjectId(patientId),
         },
       },
       {
