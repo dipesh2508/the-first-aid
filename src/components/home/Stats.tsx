@@ -20,30 +20,27 @@ const Stats = () => {
 
           <div className="lg:py-24 ">
             <h2 className="text-3xl font-bold text-white lg:font-normal sm:text-4xl">
-              Lorem ipsum dolor sit amet consectetur. Pharetra est viverra diam{" "}
+            Connecting you to the right care, wherever you are{" "}
             </h2>
 
             <p className="mt-4  text-white">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut qui
-              hic atque tenetur quis eius quos ea neque sunt, accusantium soluta
-              minus veniam tempora deserunt? Molestiae eius quidem quam
-              repellat.
+            Our extensive network of highly-qualified doctors and hospitals allows you to choose the care that best suits your needs, wherever you are, ensuring you receive the best possible care.
             </p>
 
             <div className="flex  h-5 items-start flex-1 justify-evenly text-white max-sm:my-4 lg:mt-11   text-3xl">
               <div className="flex flex-col justify-start">
-                <p className="">234</p>
-                <p className="text-xs ">Lorem</p>
+                <p className="">34</p>
+                <p className="text-xs ">Ambulance</p>
               </div>
               <Separator orientation="vertical" className="h-12 bg-black" />
               <div className="flex flex-col ">
-                <p className="">234</p>
-                <p className="text-xs ">Lorem</p>
+                <p className="">56</p>
+                <p className="text-xs ">Doctor</p>
               </div>
               <Separator orientation="vertical" className="h-12 bg-black" />
               <div className="flex flex-col ">
-                <p className="">234</p>
-                <p className="text-xs ">Lorem</p>
+                <p className="">13</p>
+                <p className="text-xs ">Hospital</p>
               </div>
             </div>
           </div>

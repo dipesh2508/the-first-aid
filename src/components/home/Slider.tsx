@@ -50,8 +50,7 @@ const Slider = () => {
 
           <div className="lg:py-12">
             <h2 className="text-lg text-center font-normal sm:text-5xl">
-              Lorem ipsum dolor sit amet consectetur. Pharetra est viverra diam
-              et ac sit.
+            Paperwork? We got this. Use instant forms, and ditch the stress.
             </h2>
           </div>
         </div>
