@@ -7,7 +7,16 @@ export async function searchHospitalByName(hospitalName: string) {
   try {
     connectToDB();
 
-    const hosptials = await Hospital.find({ name: hospitalName });
+    const hosptials = await Hospital.aggregate([
+      {
+        $match: {
+          name: {
+            $regex: `${hospitalName}`,
+            $options: "i",
+          },
+        },
+      },
+    ]);
     if (!hosptials) {
       return null;
     }

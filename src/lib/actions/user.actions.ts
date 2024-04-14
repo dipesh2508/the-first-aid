@@ -163,7 +163,16 @@ export async function findUserByUsername(username: string) {
   try {
     connectToDB();
 
-    const user = await User.findOne({ username });
+    const user = await User.aggregate([
+      {
+        $match: {
+          username: {
+            $regex: `${username}`,
+            $options: "i",
+          },
+        },
+      },
+    ]);
     if (!user) return null;
     return user;
   } catch (error: any) {
