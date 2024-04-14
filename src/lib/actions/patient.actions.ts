@@ -203,3 +203,20 @@ export async function verifyConsent(
     throw error;
   }
 }
+
+//add nominee
+export async function addNominee(patientId: string, nomineeId: string) {
+  try {
+    connectToDB();
+    const patient = await Patient.findById(patientId);
+    if (!patient) {
+      throw new Error("Patient not found");
+    }
+    patient.nominees.push(nomineeId);
+    patient.save();
+    return patient;
+  } catch (error: any) {
+    console.log(error);
+    throw error;
+  }
+}
