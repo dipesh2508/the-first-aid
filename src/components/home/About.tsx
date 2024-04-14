@@ -26,7 +26,7 @@ const About = () => {
                   </p>
                   <div className="flex mt-4 justify-center">
                     <Button className="bg-primary-6 hover:bg-primary-7">
-                      Let's Go  
+                      {"Let's Go"}
                     </Button>
                   </div>
                 </div>

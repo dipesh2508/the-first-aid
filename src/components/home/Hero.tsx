@@ -25,7 +25,7 @@ const Hero = () => {
             </p>
 
             <Link
-              href="#"
+              href="/user/dashboard"
               className="mt-8 inline-block rounded bg-primary-5 px-12 py-3 text-sm font-medium text-white transition hover:bg-primary-6 focus:outline-none focus:ring focus:ring-primary-4"
             >
               Sign Up
