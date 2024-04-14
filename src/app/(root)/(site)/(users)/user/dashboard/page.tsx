@@ -3,8 +3,21 @@ import { userLinksEmergency, userLinksProfile } from "@/constant/dashboard";
 import React from "react";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { FaUserPlus } from "react-icons/fa6";
+import { currentUser } from "@clerk/nextjs";
+import { fetchUser } from "@/lib/actions/user.actions";
+import { redirect } from "next/navigation";
 
-const Page = () => {
+const Page = async () => {
+  const user = await currentUser();
+  if (!user) return null;
+
+  const userData = await fetchUser(user.id);
+  if (!userData) return null;
+
+  if (!userData.mpin) {
+    redirect("/mpin-setup");
+  }
+
   return (
     <>
       <section className="min-h-screen mx-24 my-8 ">
