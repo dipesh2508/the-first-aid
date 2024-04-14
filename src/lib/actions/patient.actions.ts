@@ -233,6 +233,14 @@ export async function getAppointmentsOfTheUser(patientId: string) {
           patient: patientId,
         },
       },
+      {
+        $lookup: {
+          from: "patient",
+          localField: "patient",
+          foreignField: "_id",
+          as: "patients",
+        },
+      },
     ]);
 
     if (!appointments) {
