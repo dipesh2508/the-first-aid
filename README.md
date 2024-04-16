@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+<h1 align="center">The First Aid</h1>
+
+<p align="center">
+<img src="https://github.com/dipesh2508/the-first-aid/blob/main/src/assets/TheFirstAid.png" width="300" height="200">
+</p>
+
+<p align="justify">
+The First Aid is an innovative emergency response platform designed to streamline critical moments. Instantly fill medical forms, request ambulance services, and notify family members with ease. With secure access to real-time patient data, doctors make informed care decisions, while automated updates keep families informed. Welcome to a collaborative and efficient healthcare ecosystem during emergencies.
+</p>
+
+## Check out the Web App
+## Features
+Here're some of the project's best features:
+
+- Instant Medical Forms
+- Ambulance Service Requests
+- Family Notification
+- Emergency Appointments
+- Grant Consent
+- Secure Patient Data Access
+- Automated Updates
+- User-Friendly Interface
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+git clone https://github.com/dipesh2508/the-coffee-study-co.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install the dependencies :
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+3. Run on local server:
 
-## Learn More
+```
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Built with 
+Technologies used in the project:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Next.js
+- Clerk
+- Tailwind CSS
+- MongoDB
+- TypeScript
+- Mongoose ORM
+- Shad CN
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
