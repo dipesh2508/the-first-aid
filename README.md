@@ -27,7 +27,7 @@ Here're some of the project's best features:
 1. Clone the repository:
 
 ```
-git clone https://github.com/dipesh2508/the-coffee-study-co.git
+https://github.com/dipesh2508/the-first-aid.git
 ```
 
 2. Install the dependencies :
