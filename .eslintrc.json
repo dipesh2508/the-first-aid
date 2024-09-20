@@ -1,0 +1,18 @@
+{
+  "extends": ["next/core-web-vitals", "next/typescript"],
+  "rules": {
+    "no-unused-vars": "off",
+    "no-unused-imports": "off",
+    "no-unused-components": "off",
+    "no-unused-expressions": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "@ts-expect-error": "off",
+    "@typescript-eslint/no-unused-imports": "off",
+    "@typescript-eslint/no-unused-components": "off",
+    "@typescript-eslint/no-unused-expressions": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@ts-ignore": "off",
+    "@typescript-eslint/no-empty-object-type": "off"
+  }
+}
