@@ -4,14 +4,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { addNominee } from "@/lib/actions/patient.actions";
 
-export default function GuardianForm() {
+export default function GuardianForm({ patientId }: { patientId: { patientId: string } }) {
   const [guardianUserId, setGuardianUserId] = useState("");
   const [emergencyConsent, setEmergencyConsent] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+    if (emergencyConsent === 'yes') {
+      await addNominee(patientId.patientId, guardianUserId);
+    }
   };
 
   return (

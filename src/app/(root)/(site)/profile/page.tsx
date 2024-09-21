@@ -107,7 +107,7 @@ const Page = async () => {
             <ul>
               {nomineeNames.map((nominee, index) => (
                 <li key={index} className="text-gray-800">
-                  {nominee.name} ({nominee.id})
+                  {nominee}
                 </li>
               ))}
             </ul>
