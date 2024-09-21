@@ -55,7 +55,7 @@ const HospitalsPage = async () => {
 
   return (
     <MotionDiv
-      className="h-screen w-full overflow-y-auto bg-gray-100"
+      className="h-screen w-full overflow-y-auto bg-white"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -66,7 +66,7 @@ const HospitalsPage = async () => {
         variants={itemVariants}
         className="px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24 py-8"
       >
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">
+        <h2 className="text-2xl font-bold text-primary-10 mb-8">
           Nearby Hospitals
         </h2>
 

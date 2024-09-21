@@ -30,6 +30,7 @@ const config: Config = {
   				7: '#BF100D',
   				8: '#990D0B',
   				9: '#720A08',
+				10: '#4C0605',
   			},
   			secondary: {
   				DEFAULT: 'hsl(var(--secondary))',
