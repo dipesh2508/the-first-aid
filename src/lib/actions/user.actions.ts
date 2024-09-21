@@ -9,9 +9,11 @@ export async function fetchUserbyClerkId(userId: string) {
   try {
     connectToDB();
 
-    return await User.findOne({ clerkId: userId });
+    const user = await User.findOne({ clerkId: userId });
+    return user;
   } catch (error: any) {
     throw new Error(`Failed to fetch user: ${error.message}`);
+
   }
 }
 
@@ -56,7 +58,6 @@ export async function submitOnboardingForm(clerkId: string, formData: Onboarding
         address: formData.address,
         mpin: formData.mpin,
         aadhar: formData.aadhar,
-
         onboarded: true,
       });
     } else {
@@ -79,6 +80,7 @@ export async function submitOnboardingForm(clerkId: string, formData: Onboarding
     // Create or update Patient model
     const patientData: any = {
       clerkId,
+      name: `${formData.firstName} ${formData.lastName}`,
       bloodGroup: formData.bloodGroup,
       bp: formData.bp,
     };

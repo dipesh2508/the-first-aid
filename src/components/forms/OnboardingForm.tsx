@@ -27,7 +27,6 @@ export interface OnboardingFormData {
   address: string;
   mpin: string;
   aadhar: string;
-
   bloodGroup: string;
   bp: string;
   allergies: string;
@@ -53,7 +52,6 @@ const OnboardingForm = ({ user, clerkId }: { user: OnboardingFormData, clerkId: 
       mpin: user.mpin,
       aadhar: user.aadhar,
       bloodGroup: user.bloodGroup,
-
       bp: user.bp,
       allergies: user.allergies,
       medicalConditions: user.medicalConditions,
@@ -63,6 +61,7 @@ const OnboardingForm = ({ user, clerkId }: { user: OnboardingFormData, clerkId: 
   });
 
   const onSubmit = async (data: OnboardingFormData) => {
+    console.log(data);
     try {
       const result = await submitOnboardingForm(clerkId, data);
       if (result.success) {

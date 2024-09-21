@@ -11,6 +11,8 @@ const Page = async () => {
   const user = await fetchUserbyClerkId(userData.id);
   if (!user) return null;
 
+  console.log(user.age, user.address, user.gender);
+
   const patientData = await getPatientById(user.patientId);
   if (!patientData) return null;
 

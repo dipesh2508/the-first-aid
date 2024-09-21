@@ -26,9 +26,7 @@ const Page = async () => {
         age: 0,
         address: '',
         bloodGroup: '',
-
         bp: 'Normal',
-
         allergies: '',
         medicalConditions: '',
         medications: '',
