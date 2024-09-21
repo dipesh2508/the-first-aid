@@ -28,7 +28,7 @@ const DashboardNav = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <header className="p-4 font-light bg-primary-9 text-black">
+      <header className="p-4 font-light bg-primary-7 text-black">
         <div className="container flex justify-between h-12 mx-auto">
           <div className="flex  justify-between gap-x-12">
             <Link

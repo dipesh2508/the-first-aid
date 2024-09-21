@@ -10,7 +10,7 @@ import { SiInstagram } from "react-icons/si";
 
 const Footer = () => {
   return (
-    <footer className="h-full lg:h-72 w-full bg-primary-9 p-14 text-white">
+    <footer className="h-full lg:h-72 w-full bg-primary-7 p-14 text-white">
       <div className="flex lg:flex-row  gap-x-8 lg:gap-x-72">
         <div className="rounded-md  p-4">
           <Link href="/" className="flex items-center">

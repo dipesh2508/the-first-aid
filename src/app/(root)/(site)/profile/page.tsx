@@ -35,7 +35,7 @@ const Page = async () => {
 
   return (
     <MotionDiv
-      className="h-screen w-full overflow-y-auto px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24 py-8 bg-gray-100"
+      className="h-screen w-full overflow-y-auto px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24 py-8 bg-white"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -46,7 +46,7 @@ const Page = async () => {
 
       <MotionDiv
         variants={itemVariants}
-        className="bg-white rounded-lg shadow-md p-6 mb-6"
+        className="bg-white rounded-lg shadow-md shadow-primary-2 p-6 mb-6 "
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center">
@@ -71,7 +71,7 @@ const Page = async () => {
 
       <MotionDiv
         variants={itemVariants}
-        className="bg-white rounded-lg shadow-md p-6 mb-6"
+        className="bg-white rounded-lg shadow-md shadow-primary-2 p-6 mb-6"
       >
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-semibold text-gray-800">
@@ -97,8 +97,8 @@ const Page = async () => {
             <p className="text-gray-800">{user.gender}</p>
           </div>
           <div>
-            <p className="text-gray-600">Date of Birth</p>
-            <p className="text-gray-800">{user.dateOfBirth}</p>
+            <p className="text-gray-600">Age</p>
+            <p className="text-gray-800">{user.age}</p>
           </div>
           <div>
             <p className="text-gray-600">Nominees</p>
@@ -127,7 +127,7 @@ const Page = async () => {
 
       <MotionDiv
         variants={itemVariants}
-        className="bg-white rounded-lg shadow-md p-6"
+        className="bg-white rounded-lg shadow-md shadow-primary-2 p-6"
       >
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-semibold text-gray-800">
