@@ -82,7 +82,7 @@ const Page: React.FC = async () => {
               title="Legal Guardians"
               name="Keep your family informed, always"
               link="/user/beneficiaries"
-              linkText="Add Beneficiaries"
+              linkText="Add Guardians"
               Icon={FaUserPlus}
               isReversed={true}
             />
