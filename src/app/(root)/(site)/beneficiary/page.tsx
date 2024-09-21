@@ -18,7 +18,7 @@ const page = async () => {
   }
   return (
     <div className='flex w-full items-center justify-center min-h-screen bg-white py-6'>
-        <GuardianForm patientId={obj} />
+        <GuardianForm patientId={obj} name={userInfo.name} />
     </div>
 
 

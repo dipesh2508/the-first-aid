@@ -6,7 +6,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { addNominee } from "@/lib/actions/patient.actions";
 
-export default function GuardianForm({ patientId }: { patientId: { patientId: string } }) {
+export default function GuardianForm({ patientId, name }: { patientId: { patientId: string }, name: string }) {
   const [guardianUserId, setGuardianUserId] = useState("");
   const [emergencyConsent, setEmergencyConsent] = useState("");
 
@@ -29,7 +29,7 @@ export default function GuardianForm({ patientId }: { patientId: { patientId: st
         <form onSubmit={handleSubmit} className=" space-y-6">
           <div className="border-b border-primary-9  ">
             <h3 className="text-lg font-semibold text-[#720A08] mb-2">
-              Add Guardian by User ID
+              Add Guardian by UserName
             </h3>
             <p className="text-sm text-gray-600 mb-2">
               Please enter the User ID of the guardian who will be added to your
@@ -75,7 +75,7 @@ export default function GuardianForm({ patientId }: { patientId: { patientId: st
               Declaration
             </h3>
             <p className="text-sm text-gray-600">
-              I, [Patient&apos;s Name], confirm that the above information is
+              I, {name}, confirm that the above information is
               accurate and true. I authorize Ipollo Hospitals, Mangaluru to add
               the listed guardian to my profile and contact them in case of an
               emergency or any necessary medical assistance.
