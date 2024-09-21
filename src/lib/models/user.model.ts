@@ -7,6 +7,8 @@ export interface IUser {
   phone: string;
   username: string;
   gender: string;
+  address: string;
+  age: number;
   image?: string;
   mpin?: number;
   aadhar?: string;
@@ -55,6 +57,14 @@ export const UserSchema = new mongoose.Schema<IUser>(
         "male", "female"
       ]
     },
+    age: {
+      type: Number,
+      required: true,
+    },
+    address: {
+      type: String,
+      required: true,
+    },
     aadhar: {
       type: String,
     },
@@ -62,6 +72,7 @@ export const UserSchema = new mongoose.Schema<IUser>(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Patient",
     },
+
     isDoctor: {
       type: Boolean,
       default: false,

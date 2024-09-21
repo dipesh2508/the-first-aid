@@ -23,8 +23,11 @@ export interface OnboardingFormData {
   phone: string;
   username: string;
   gender: string;
+  age: number;
+  address: string;
   mpin: string;
   aadhar: string;
+
   bloodGroup: string;
   bp: string;
   allergies: string;
@@ -45,9 +48,12 @@ const OnboardingForm = ({ user, clerkId }: { user: OnboardingFormData, clerkId: 
       phone: user.phone,
       username: user.username,
       gender: user.gender,
+      age: user.age,
+      address: user.address,
       mpin: user.mpin,
       aadhar: user.aadhar,
       bloodGroup: user.bloodGroup,
+
       bp: user.bp,
       allergies: user.allergies,
       medicalConditions: user.medicalConditions,
@@ -153,6 +159,36 @@ const OnboardingForm = ({ user, clerkId }: { user: OnboardingFormData, clerkId: 
         />
         <FormField
           control={form.control}
+          name="age"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                Age <span className="text-red-500">*</span>
+              </FormLabel>
+              <FormControl>
+                <Input {...field} type="number" required />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="address"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                Address <span className="text-red-500">*</span>
+              </FormLabel>
+              <FormControl>
+                <Input {...field} required />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="gender"
           render={({ field }) => (
             <FormItem>
@@ -193,9 +229,9 @@ const OnboardingForm = ({ user, clerkId }: { user: OnboardingFormData, clerkId: 
           name="aadhar"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Aadhar Number</FormLabel>
+              <FormLabel>Aadhar Number <span className="text-red-500">*</span></FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} required />
               </FormControl>
               <FormMessage />
             </FormItem>

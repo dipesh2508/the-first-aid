@@ -4,34 +4,38 @@ import Hero from "@/components/hospital/Hero";
 import HospitalCard from "@/components/cards/HospitalCard";
 import hospital1 from "@/assets/hospital1.png";
 import hospital2 from "@/assets/hospital2.png";
+import { getAllHospitals } from "@/lib/actions/hospital.actions";
 
-const hospitalData = [
-  {
-    imageUrl: hospital1,
-    name: "Ipollo Hospitals, Chennai",
-    address: "21 Greams Lane, Off Greams Road, Chennai, Tamil Nadu, 600006",
-    distance: "5.2 km away from your location",
-    rating: 4.7,
-    reviewCount: 1542,
-    type: "General Hospital",
-    facilities: ["Free Parking", "In-house Pharmacy", "Online Consultations"],
-    buttonText: "Book Appointment",
-  },
-  {
-    imageUrl: hospital2,
-    name: "City General Hospital",
-    address: "123 Main St, Downtown, Chennai, Tamil Nadu, 600001",
-    distance: "3.8 km away from your location",
-    rating: 4.5,
-    reviewCount: 1280,
-    type: "Multi-Specialty Hospital",
-    facilities: ["24/7 Emergency", "Diagnostic Center", "Cafeteria"],
-    buttonText: "View Details",
-  },
-  // Add more hospital objects as needed
-];
+// const hospitalData = [
+//   {
+//     imageUrl: hospital1,
+//     name: "Ipollo Hospitals, Chennai",
+//     address: "21 Greams Lane, Off Greams Road, Chennai, Tamil Nadu, 600006",
+//     distance: "5.2 km away from your location",
+//     rating: 4.7,
+//     reviewCount: 1542,
+//     type: "General Hospital",
+//     facilities: ["Free Parking", "In-house Pharmacy", "Online Consultations"],
+//     buttonText: "Book Appointment",
+//   },
+//   {
+//     imageUrl: hospital2,
+//     name: "City General Hospital",
+//     address: "123 Main St, Downtown, Chennai, Tamil Nadu, 600001",
+//     distance: "3.8 km away from your location",
+//     rating: 4.5,
+//     reviewCount: 1280,
+//     type: "Multi-Specialty Hospital",
+//     facilities: ["24/7 Emergency", "Diagnostic Center", "Cafeteria"],
+//     buttonText: "View Details",
+//   },
+//   // Add more hospital objects as needed
+// ];
 
-const HospitalsPage = () => {
+const HospitalsPage = async () => {
+
+  const hospitalData = await getAllHospitals();
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -70,9 +74,19 @@ const HospitalsPage = () => {
           {hospitalData.map((hospital, index) => (
             <HospitalCard
               key={index}
-              {...hospital}
-              onButtonClick={() => console.log(`Clicked on ${hospital.name}`)}
+              image={hospital.image}
+              name={hospital.name}
+              address={hospital.address}
+              distance={"1.5 km away from your location"}
+              rating={4.5}
+              reviewCount={100}
+              type={hospital.type}
+
+              services={hospital.services}
+              id={hospital.id}
+              buttonText="Contact Us"
             />
+
           ))}
         </div>
       </MotionDiv>
