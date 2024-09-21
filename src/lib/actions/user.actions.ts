@@ -52,8 +52,11 @@ export async function submitOnboardingForm(clerkId: string, formData: Onboarding
         phone: formData.phone,
         username: formData.username,
         gender: formData.gender,
+        age: formData.age,
+        address: formData.address,
         mpin: formData.mpin,
         aadhar: formData.aadhar,
+
         onboarded: true,
       });
     } else {
@@ -65,7 +68,10 @@ export async function submitOnboardingForm(clerkId: string, formData: Onboarding
       user.gender = formData.gender;
       user.mpin = formData.mpin;
       user.aadhar = formData.aadhar;
+      user.age = formData.age;
+      user.address = formData.address;
       user.onboarded = true;
+
     }
 
     await user.save();

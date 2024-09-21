@@ -9,10 +9,20 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { getHospitalsByLocation } from "@/lib/actions/hospital.actions";
 import HospitalCard from "@/components/cards/HospitalCard";
-import { IHospital } from "@/lib/models/hospital.model";
 import hospitalImage from "@/assets/hospital1.png";
+
+interface IHospital {
+  _id: string;
+  image: string;
+  name: string;
+  address: string;
+  rating: number;
+  type: string;
+  services: string[];
+}
 const Hero = () => {
   const [location, setLocation] = useState("");
+
   const [hospitals, setHospitals] = useState<IHospital[]>([]);
 
   const containerVariants = {
@@ -34,7 +44,9 @@ const Hero = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log(location);
     const results = await getHospitalsByLocation(location);
+    console.log(results);
     setHospitals(results);
   };
 
@@ -77,29 +89,30 @@ const Hero = () => {
           </MotionDiv>
         </div>
       </div>
-      <MotionDiv variants={itemVariants} className="max-w-2xl">
+      <MotionDiv variants={itemVariants} className="w-full mx-24 my-12">
         {hospitals.length > 0 && (
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="container mx-auto flex flex-col">
             <h1 className="text-4xl font-bold text-primary-8 mb-4">
               Search Results
+
             </h1>
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {hospitals.map((hospital, index) => (
               <HospitalCard
                 key={index}
-                imageUrl={hospitalImage}
+                id={hospital._id}
+                image={hospital.image}
                 name={hospital.name}
                 address={hospital.address}
                 distance={`${Math.floor(Math.random() * 100) + 1} km`}
                 rating={Math.floor(Math.random() * 5) + 1}
                 reviewCount={Math.floor(Math.random() * 1000) + 1}
                 type={hospital.type}
-                facilities={hospital.services}
+                services={hospital.services}
                 buttonText="View Details"
-                onButtonClick={() => {
-                  /* Handle button click */
-                }}
               />
             ))}
+          </div>
           </div>
         )}
       </MotionDiv>
