@@ -79,7 +79,7 @@ const Page: React.FC = async () => {
           </MotionDiv>
           <MotionDiv variants={itemVariants}>
             <DashboardCard
-              title="Beneficiary"
+              title="Legal Guardians"
               name="Keep your family informed, always"
               link="/user/beneficiaries"
               linkText="Add Beneficiaries"
