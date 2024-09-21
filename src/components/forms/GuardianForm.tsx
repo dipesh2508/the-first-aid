@@ -11,11 +11,11 @@ export default function GuardianForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted", { guardianUserId, emergencyConsent });
+    
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#FBF1F1]">
+    <div className="min-h-screen max-w-3xl min-w-2/3 flex items-center justify-center bg-[#FBF1F1] px-12 rounded-lg">
       <div className="w-full max-w-md p-6 bg-[#FBF1F1]">
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-[#720A08]">
@@ -32,6 +32,8 @@ export default function GuardianForm() {
               Please enter the User ID of the guardian who will be added to your
               hospital profile.
             </p>
+
+
 
             <Input
               id="guardianUserId"
