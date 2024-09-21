@@ -17,7 +17,7 @@ interface SidebarItem {
 const sidebarItems: SidebarItem[] = [
   { id: 'home', label: 'Home', icon: FaHome, route: '/dashboard' },
   { id: 'profile', label: 'Profile', icon: FaUser, route: '/profile' },
-  { id: 'beneficiary', label: 'Beneficiary', icon: FaUserFriends, route: '/beneficiary' },
+  { id: 'beneficiary', label: 'Legal Guardians', icon: FaUserFriends, route: '/beneficiary' },
   { id: 'hospitals', label: 'Hospitals', icon: FaHospital, route: '/hospitals' },
   { id: 'appointments', label: 'Appointments', icon: FaCalendarCheck, route: '/appointments' },
   { id: 'consent', label: 'Consent', icon: FaFileContract, route: '/consent' },
