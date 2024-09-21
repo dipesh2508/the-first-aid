@@ -6,7 +6,6 @@ import { fetchUserbyClerkId } from '@/lib/actions/user.actions';
 import { redirect } from "next/navigation";
 import OnboardingForm from '@/components/forms/OnboardingForm';
 
-
 const Page = async () => {
     const user = await currentUser();
     if (!user) return null;
@@ -42,6 +41,4 @@ const Page = async () => {
 }
 
 export default Page;
-
-
 
