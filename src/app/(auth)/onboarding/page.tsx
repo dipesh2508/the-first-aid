@@ -23,8 +23,12 @@ const Page = async () => {
         gender: '',
         mpin: '',
         aadhar: '',
+        age: 0,
+        address: '',
         bloodGroup: '',
+
         bp: 'Normal',
+
         allergies: '',
         medicalConditions: '',
         medications: '',
