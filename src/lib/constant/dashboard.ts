@@ -24,7 +24,7 @@ export const userLinksProfile: userLinks[] = [
     isReversed: false,
   },
   {
-    title: "Beneficiary",
+    title: "Legal Guardians",
     name: "Keep your family informed, always",
     link: "#",
     linkText: "Add Beneficiaries",
