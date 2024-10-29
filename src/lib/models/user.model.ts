@@ -1,8 +1,14 @@
 import mongoose from "mongoose";
 
+enum Role {
+  USER = "user",
+  ADMIN = "admin",
+}
+
 export interface IUser {
   clerkId: string;
   name: string;
+  role: Role;
   email: string;
   phone: string;
   username: string;
@@ -27,6 +33,11 @@ export const UserSchema = new mongoose.Schema<IUser>(
     name: {
       type: String,
       required: true,
+    },
+    role: {
+      type: String,
+      enum: Object.values(Role),
+      default: Role.USER,
     },
     email: {
       type: String,

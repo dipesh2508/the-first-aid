@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   Form,
   FormField,
@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { submitOnboardingForm } from "@/lib/actions/user.actions";
 import { useRouter } from "next/navigation";
+import ButtonLoader from "@/components/shared/ButtonLoader";
 
 export interface OnboardingFormData {
   firstName: string;
@@ -38,7 +39,8 @@ export interface OnboardingFormData {
 const OnboardingForm = ({ user, clerkId }: { user: OnboardingFormData, clerkId: string }) => {
 
   const router = useRouter();
-  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const form = useForm<OnboardingFormData>({
     defaultValues: {
       firstName: user.firstName,
@@ -61,21 +63,19 @@ const OnboardingForm = ({ user, clerkId }: { user: OnboardingFormData, clerkId: 
   });
 
   const onSubmit = async (data: OnboardingFormData) => {
-    console.log(data);
+    setIsSubmitting(true);
     try {
       const result = await submitOnboardingForm(clerkId, data);
       if (result.success) {
-        console.log("Form submitted successfully", result);
         router.push("/dashboard");
       } else {
         console.error("Form submission failed", result.error);
-        // Handle submission failure (e.g., show error message)
       }
     } catch (error) {
       console.error("An error occurred during form submission", error);
-      // Handle unexpected errors
+    } finally {
+      setIsSubmitting(false);
     }
-    // Here you would typically send this data to your backend
   };
 
   return (
@@ -320,7 +320,10 @@ const OnboardingForm = ({ user, clerkId }: { user: OnboardingFormData, clerkId: 
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={isSubmitting} className="bg-primary-6 text-white">
+          {isSubmitting && <ButtonLoader isLoading={isSubmitting} />}
+          Submit
+        </Button>
       </form>
     </Form>
   );
