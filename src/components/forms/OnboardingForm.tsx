@@ -16,6 +16,8 @@ import { useForm } from "react-hook-form";
 import { submitOnboardingForm } from "@/lib/actions/user.actions";
 import { useRouter } from "next/navigation";
 import ButtonLoader from "@/components/shared/ButtonLoader";
+import { useToast } from "@/hooks/use-toast";
+
 
 export interface OnboardingFormData {
   firstName: string;
@@ -39,6 +41,7 @@ export interface OnboardingFormData {
 const OnboardingForm = ({ user, clerkId }: { user: OnboardingFormData, clerkId: string }) => {
 
   const router = useRouter();
+  const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<OnboardingFormData>({
@@ -67,11 +70,26 @@ const OnboardingForm = ({ user, clerkId }: { user: OnboardingFormData, clerkId: 
     try {
       const result = await submitOnboardingForm(clerkId, data);
       if (result.success) {
+        toast({
+          title: "Onboarding Complete",
+          description: "Your profile has been successfully set up!",
+          variant: "default",
+        });
         router.push("/dashboard");
       } else {
+        toast({
+          title: "Error",
+          description: result.error || "Something went wrong",
+          variant: "destructive",
+        });
         console.error("Form submission failed", result.error);
       }
     } catch (error) {
+      toast({
+        title: "Error",
+        description: "An error occurred during form submission",
+        variant: "destructive",
+      });
       console.error("An error occurred during form submission", error);
     } finally {
       setIsSubmitting(false);

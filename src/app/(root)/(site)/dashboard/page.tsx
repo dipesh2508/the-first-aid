@@ -18,7 +18,7 @@ const Page: React.FC = async () => {
   const userData = await fetchUserbyClerkId(user.id);
 
   if (!userData) {
-    return null;
+    redirect("/onboarding");
   }
 
   if (!userData?.mpin) {

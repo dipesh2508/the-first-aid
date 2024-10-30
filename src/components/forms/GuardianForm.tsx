@@ -7,9 +7,11 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { addNominee } from "@/lib/actions/patient.actions";
 import ButtonLoader from "@/components/shared/ButtonLoader";
+import { useToast } from "@/hooks/use-toast";
 
 export default function GuardianForm({ patientId, name }: { patientId: string, name: string }) {
   const router = useRouter();
+  const { toast } = useToast();
   const [guardianUserId, setGuardianUserId] = useState("");
   const [emergencyConsent, setEmergencyConsent] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -22,13 +24,28 @@ export default function GuardianForm({ patientId, name }: { patientId: string, n
         const result = await addNominee(patientId, guardianUserId);
         
         if (result.success) {
+          toast({
+            title: "Guardian Added Successfully",
+            description: "Your guardian has been added to your profile",
+            variant: "default",
+          });
           router.refresh();
           router.push("/dashboard");
         } else {
+          toast({
+            title: "Error",
+            description: result.message || "Failed to add guardian",
+            variant: "destructive",
+          });
           console.error("Form submission failed", result.message);
         }
       }
     } catch (error) {
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
       console.error("An error occurred during form submission", error);
     } finally {
       setIsSubmitting(false);
@@ -51,7 +68,7 @@ export default function GuardianForm({ patientId, name }: { patientId: string, n
             </h3>
             <p className="text-sm text-gray-600 mb-2">
               Please enter the Username of the guardian who will be added to your
-              hospital profile.
+              patient profile.
             </p>
 
             <Input

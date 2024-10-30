@@ -1,6 +1,7 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import { Inter } from "next/font/google";
 import "../globals.css";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata = {
     title: "The First Aid",
@@ -18,9 +19,10 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={`${inter.className} bg-dark-1`}>
-          <div className="w-full flex justify-center items-center min-h-screen">
+          <main className="w-full flex justify-center items-center min-h-screen">
             {children}
-          </div>
+            <Toaster />
+          </main>
         </body>
       </html>
     </ClerkProvider>
