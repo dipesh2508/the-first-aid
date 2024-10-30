@@ -80,7 +80,7 @@ const OnboardingForm = ({ user, clerkId }: { user: OnboardingFormData, clerkId: 
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-96 text-black">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full px-16 text-black">
         <FormField
           control={form.control}
           name="firstName"
