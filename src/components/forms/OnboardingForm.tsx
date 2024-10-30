@@ -159,13 +159,20 @@ const OnboardingForm = ({ user, clerkId }: { user: OnboardingFormData, clerkId: 
         <FormField
           control={form.control}
           name="age"
+          rules={{
+            min: {
+              value: 18,
+              message: "You must be at least 18 years old"
+            },
+            validate: (value) => value >= 18 || "You must be at least 18 years old"
+          }}
           render={({ field }) => (
             <FormItem>
               <FormLabel>
                 Age <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
-                <Input {...field} type="number" required />
+                <Input {...field} type="number" required min="18" />
               </FormControl>
               <FormMessage />
             </FormItem>
