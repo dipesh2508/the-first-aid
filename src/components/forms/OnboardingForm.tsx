@@ -214,9 +214,11 @@ const OnboardingForm = ({ user, clerkId }: { user: OnboardingFormData, clerkId: 
           name="mpin"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>MPIN</FormLabel>
+              <FormLabel>
+                MPIN <span className="text-red-500">*</span>
+              </FormLabel>
               <FormControl>
-                <Input {...field} type="password" maxLength={4} />
+                <Input {...field} type="password" maxLength={4} required />
               </FormControl>
               <FormDescription>4-digit PIN for quick access</FormDescription>
               <FormMessage />
