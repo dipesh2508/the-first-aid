@@ -1,5 +1,8 @@
 import { getPatientById } from "@/lib/actions/patient.actions";
-import { fetchUserbyClerkId, fetchUserNamesById } from "@/lib/actions/user.actions";
+import {
+  fetchUserbyClerkId,
+  fetchUserNamesById,
+} from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs/server";
 import Image from "next/image";
 import { FaRegEdit } from "react-icons/fa";
@@ -105,22 +108,30 @@ const Page = async () => {
           <div>
             <p className="text-gray-600">Nominees</p>
             <ul>
-              {nomineeNames.map((nominee, index) => (
-                <li key={index} className="text-gray-800">
-                  {nominee}
-                </li>
-              ))}
+              {nomineeNames.length ? (
+                nomineeNames.map((nominee, index) => (
+                  <li key={index} className="text-gray-800">
+                    {nominee}
+                  </li>
+                ))
+              ) : (
+                <li className="text-gray-800">N/A</li>
+              )}
             </ul>
           </div>
           <div>
             <p className="text-gray-600">Emergency Contacts</p>
             <ul>
-              {patientData.emergencyContacts?.map(
-                (contact: string, index: number) => (
-                  <li key={index} className="text-gray-800">
-                    Contact {index + 1}: {contact}
-                  </li>
+              {patientData.emergencyContacts?.length ? (
+                patientData.emergencyContacts.map(
+                  (contact: string, index: number) => (
+                    <li key={index} className="text-gray-800">
+                      Contact {index + 1}: {contact}
+                    </li>
+                  )
                 )
+              ) : (
+                <li className="text-gray-800">N/A</li>
               )}
             </ul>
           </div>
@@ -144,23 +155,35 @@ const Page = async () => {
           </div>
           <div>
             <p className="text-gray-600">Allergy List</p>
-            <p className="text-gray-800">{patientData.allergies?.join(", ")}</p>
+            <p className="text-gray-800">
+              {patientData.allergies?.length
+                ? patientData.allergies.join(", ")
+                : "N/A"}
+            </p>
           </div>
           <div>
             <p className="text-gray-600">Medical Conditions</p>
             <p className="text-gray-800">
-              {patientData.medicalConditions?.join(", ")}
+              {patientData.medicalConditions?.length
+                ? patientData.medicalConditions.join(", ")
+                : "N/A"}
             </p>
           </div>
           <div>
             <p className="text-gray-600">Medications</p>
             <p className="text-gray-800">
-              {patientData.medications?.join(", ")}
+              {patientData.medications?.length
+                ? patientData.medications.join(", ")
+                : "N/A"}
             </p>
           </div>
           <div>
             <p className="text-gray-600">Surgeries</p>
-            <p className="text-gray-800">{patientData.surgeries?.join(", ")}</p>
+            <p className="text-gray-800">
+              {patientData.surgeries?.length
+                ? patientData.surgeries.join(", ")
+                : "N/A"}
+            </p>
           </div>
         </div>
       </MotionDiv>

@@ -4,7 +4,7 @@ export interface IDoctor {
   userId: string;
   qualifications: string[];
   specializations: string[];
-  hospital: string;
+  hospital: mongoose.Schema.Types.ObjectId;
   regId: string;
   patients: mongoose.Schema.Types.ObjectId[];
   appointments: mongoose.Schema.Types.ObjectId[];

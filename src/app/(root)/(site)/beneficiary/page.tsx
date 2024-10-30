@@ -10,18 +10,16 @@ const page = async () => {
   const userInfo = await fetchUserbyClerkId(user.id);
   if (!userInfo) return null;
 
-  const id = userInfo._id;
-  const idString = id.toString();
-  console.log(idString);
-  const obj = {
-    patientId: idString
-  }
+  const serializedId = userInfo._id.toString();
+  const serializedName = String(userInfo.name);
+
   return (
     <div className='flex w-full items-center justify-center min-h-screen bg-white py-6'>
-        <GuardianForm patientId={obj} name={userInfo.name} />
+        <GuardianForm 
+          patientId={serializedId} 
+          name={serializedName} 
+        />
     </div>
-
-
   )
 }
 

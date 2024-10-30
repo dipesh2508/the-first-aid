@@ -5,6 +5,7 @@ import { connectToDB } from "../mongoose";
 import { Patient } from "../models/patient.model";
 import { User } from "../models/user.model";
 import { Appointment } from "../models/appointment.model";
+import { NextResponse } from "next/server";
 
 export async function getPatientById(patientId: string) {
   try {
@@ -21,28 +22,35 @@ export async function addNominee(patientId: string, nomineeUserName: string) {
     connectToDB();
     const user = await User.findById(patientId);
     const nominee = await User.findOne({username: nomineeUserName});
-    console.log(nominee);
     if (!nominee) {
-      throw new Error("Nominee not found");
+      return { message: "Nominee not found", status: 404, success: false };
     }
 
     const patient = await Patient.findById(user.patientId);
-    console.log(patient);
     if (!patient) {
-      throw new Error("Patient not found");
+      return { message: "Patient not found", status: 404, success: false };
     }
 
     const NomineeID = nominee._id.toString();
+    const NomineeContact = nominee.phone.toString();
+
+    if (patient.nominees.includes(NomineeID)) {
+      return { message: "This person is already a nominee", status: 400, success: false };
+    }
+
+    if (patient.emergencyContacts.includes(NomineeContact)) {
+      return { message: "This contact number is already registered", status: 400, success: false };
+    }
+
     patient.nominees.push(NomineeID);
+    patient.emergencyContacts.push(NomineeContact);
     await patient.save();
 
-
-
     revalidatePath(`/profile/${patientId}`);
-    return patient;
+    return { message: "Nominee added successfully", status: 200, success: true };
   }
   catch (error: any) {
-    throw new Error(`Failed to add nominee: ${error.message}`);
+    return { message: error.message, status: 500, success: false };
   }
 }
 

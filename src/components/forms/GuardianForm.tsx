@@ -1,42 +1,58 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { addNominee } from "@/lib/actions/patient.actions";
+import ButtonLoader from "@/components/shared/ButtonLoader";
 
-export default function GuardianForm({ patientId, name }: { patientId: { patientId: string }, name: string }) {
+export default function GuardianForm({ patientId, name }: { patientId: string, name: string }) {
+  const router = useRouter();
   const [guardianUserId, setGuardianUserId] = useState("");
   const [emergencyConsent, setEmergencyConsent] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (emergencyConsent === 'yes') {
-      await addNominee(patientId.patientId, guardianUserId);
+    setIsSubmitting(true);
+    try {
+      if (emergencyConsent === 'yes') {
+        const result = await addNominee(patientId, guardianUserId);
+        
+        if (result.success) {
+          router.refresh();
+          router.push("/dashboard");
+        } else {
+          console.error("Form submission failed", result.message);
+        }
+      }
+    } catch (error) {
+      console.error("An error occurred during form submission", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="min-h-screen max-w-3xl min-w-2/3 flex items-center justify-center bg-[#FBF1F1] px-12 rounded-lg">
-      <div className="w-full max-w-md p-6 bg-[#FBF1F1]">
+    <div className="min-h-screen max-w-3xl min-w-2/3 flex items-center justify-center bg-white shadow-2xl px-12 rounded-lg">
+      <div className="w-full max-w-md p-6 bg-white">
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-[#720A08]">
-            Ipollo Hospitals, Bengaluru
+          <h1 className="text-2xl font-bold text-primary-8">
+            The First Aid Team
           </h1>
-          <h2 className="text-lg text-[#720A08]">Guardian Addition Form</h2>
+          <h2 className="text-lg text-primary-8">Guardian Addition Form</h2>
         </div>
         <form onSubmit={handleSubmit} className=" space-y-6">
           <div className="border-b border-primary-9  ">
-            <h3 className="text-lg font-semibold text-[#720A08] mb-2">
+            <h3 className="text-lg font-semibold text-primary-8 mb-2">
               Add Guardian by UserName
             </h3>
             <p className="text-sm text-gray-600 mb-2">
-              Please enter the User ID of the guardian who will be added to your
+              Please enter the Username of the guardian who will be added to your
               hospital profile.
             </p>
-
-
 
             <Input
               id="guardianUserId"
@@ -48,7 +64,7 @@ export default function GuardianForm({ patientId, name }: { patientId: { patient
             />
           </div>
           <div className=" border-b border-primary-9">
-            <h3 className="text-lg font-semibold text-[#720A08] mb-2">
+            <h3 className="text-lg font-semibold text-primary-8 mb-2">
               Emergency Consent
             </h3>
             <p className="text-sm text-gray-600 mb-2">
@@ -71,20 +87,22 @@ export default function GuardianForm({ patientId, name }: { patientId: { patient
             </RadioGroup>
           </div>
           <div className="border-b border-primary-9  p-4 ">
-            <h3 className="text-lg font-semibold text-[#720A08] mb-2">
+            <h3 className="text-lg font-semibold text-primary-8 mb-2">
               Declaration
             </h3>
             <p className="text-sm text-gray-600">
               I, {name}, confirm that the above information is
-              accurate and true. I authorize Ipollo Hospitals, Mangaluru to add
+              accurate and true. I authorize the first aid team to add
               the listed guardian to my profile and contact them in case of an
               emergency or any necessary medical assistance.
             </p>
           </div>
           <Button
             type="submit"
-            className="w-full bg-[#F2403C] hover:bg-[#D63631] text-white"
+            disabled={isSubmitting}
+            className="w-full bg-primary-5 hover:bg-primary-6 text-white"
           >
+            {isSubmitting && <ButtonLoader isLoading={isSubmitting} />}
             Submit
           </Button>
         </form>

@@ -31,8 +31,8 @@ const PatientSchema = new mongoose.Schema<IPatient>(
     ],
     emergencyContacts: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        type: String,
+        required: false,
       },
     ],
     bp: {
