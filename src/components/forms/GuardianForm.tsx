@@ -77,7 +77,7 @@ export default function GuardianForm({ patientId, name }: { patientId: string, n
               onChange={(e) => setGuardianUserId(e.target.value)}
               className="w-full text-primary-6 my-4"
               required
-              placeholder="Guardian ID"
+              placeholder="Guardian Username"
             />
           </div>
           <div className=" border-b border-primary-9">

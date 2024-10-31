@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 export interface IDoctor {
-  userId: string;
+  name: string;
   qualifications: string[];
   specializations: string[];
   hospital: mongoose.Schema.Types.ObjectId;
@@ -12,6 +12,10 @@ export interface IDoctor {
 
 const DoctorSchema = new mongoose.Schema<IDoctor>(
   {
+    name: {
+      type: String,
+      required: true,
+    },
     qualifications: [
       {
         type: String,
@@ -34,6 +38,11 @@ const DoctorSchema = new mongoose.Schema<IDoctor>(
         ref: "User",
       },
     ],
+    regId: {
+      type: String,
+      required: true,
+      unique:true,
+    },
     appointments: [
       {
         type: mongoose.Schema.Types.ObjectId,

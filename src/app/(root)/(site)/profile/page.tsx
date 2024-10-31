@@ -7,6 +7,8 @@ import { currentUser } from "@clerk/nextjs/server";
 import Image from "next/image";
 import { FaRegEdit } from "react-icons/fa";
 import MotionDiv from "@/components/animations/MotionDiv";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const Page = async () => {
   const userData = await currentUser();
@@ -46,7 +48,14 @@ const Page = async () => {
       variants={containerVariants}
     >
       <MotionDiv variants={itemVariants} className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">My Profile</h1>
+        <div className="flex justify-between items-center">
+          <h1 className="text-2xl font-bold text-gray-800">My Profile</h1>
+          {user.role === "admin" && (
+            <Link href="/admin/dashboard">
+              <Button>Admin View</Button>
+            </Link>
+          )}
+        </div>
       </MotionDiv>
 
       <MotionDiv

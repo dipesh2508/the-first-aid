@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 export interface IHospital {
+  _id: mongoose.Schema.Types.ObjectId;
   name: string;
   email: string;
   phone: string;
