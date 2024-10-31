@@ -4,6 +4,7 @@ interface IAppointment {
   patient: mongoose.Schema.Types.ObjectId;
   consultingDoctor: mongoose.Schema.Types.ObjectId;
   surgeryType: string;
+  phone:string;
   riskInvolved: string;
   hospital: mongoose.Schema.Types.ObjectId;
   date: string;
@@ -24,6 +25,10 @@ const appointmentSchema = new mongoose.Schema<IAppointment>(
       required: true,
     },
     consultingDoctor: {
+      type: String,
+      required: true,
+    },
+    phone: {
       type: String,
       required: true,
     },

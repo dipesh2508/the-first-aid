@@ -17,6 +17,16 @@ export async function fetchUserbyClerkId(userId: string) {
   }
 }
 
+export async function fetchUserbyUsername(username: string) {
+  try {
+    connectToDB();
+    const user = await User.findOne({ username });
+    return user;
+  } catch (error: any) {
+    throw new Error(`Failed to fetch user: ${error.message}`);
+  }
+}
+
 export async function fetchUser(userId: string) {
   try {
     connectToDB();

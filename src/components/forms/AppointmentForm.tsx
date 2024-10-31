@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -22,229 +21,301 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
+import { getAllHospitals } from "@/lib/actions/hospital.actions";
+import { getDoctorsByHospital, createAppointment } from "@/lib/actions/appointment.action";
+import ButtonLoader from "@/components/shared/ButtonLoader";
+import MotionDiv from "@/components/animations/MotionDiv";
 
 const formSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  phoneNumber: z.string().min(1, "Phone number is required"),
-  email: z.string().email("Invalid email address"),
+  username: z.string().min(1, "Username is required"),
+  phone: z.string().min(1, "Phone number is required"),
   date: z.string().min(1, "Date is required"),
   time: z.string().min(1, "Time is required"),
+  hospital: z.string().min(1, "Hospital is required"),
   doctor: z.string().min(1, "Doctor is required"),
-  department: z.string().min(1, "Department is required"),
+  appointmentType: z.enum(["normal", "emergency"]),
   emergencyType: z.string().optional(),
 });
 
-const doctors = [
-  { id: "1", name: "Dr. John Doe" },
-  { id: "2", name: "Dr. Jane Smith" },
-];
-
-const departments = [
-  { id: "1", name: "Cardiology" },
-  { id: "2", name: "Neurology" },
-];
-
 const emergencyTypes = [
-  { id: "1", name: "Accident" },
-  { id: "2", name: "Heart Attack" },
-  { id: "3", name: "Stroke" },
-  { id: "4", name: "Other" },
+  { id: "accident", name: "Accident" },
+  { id: "heart_attack", name: "Heart Attack" },
+  { id: "stroke", name: "Stroke" },
+  { id: "others", name: "Others" },
 ];
 
 export default function AppointmentForm() {
+  const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [hospitals, setHospitals] = useState<any[]>([]);
+  const [doctors, setDoctors] = useState<any[]>([]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      phoneNumber: "",
-      email: "",
+      username: "",
+      phone: "",
       date: "",
       time: "",
+      hospital: "",
       doctor: "",
-      department: "",
+      appointmentType: "normal",
       emergencyType: "",
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  useEffect(() => {
+    const fetchHospitals = async () => {
+      const hospitalsList = await getAllHospitals();
+      setHospitals(hospitalsList);
+    };
+    fetchHospitals();
+  }, []);
+
+  const handleHospitalChange = async (hospitalId: string) => {
+    const hospitalDoctors = await getDoctorsByHospital(hospitalId);
+    setDoctors(hospitalDoctors);
+    form.setValue("hospital", hospitalId);
+    form.setValue("doctor", ""); // Reset doctor selection
+  };
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true);
-    // Here you would typically send the form data to your server
-    console.log(values);
-    setIsSubmitting(false);
-  }
+    try {
+      const result = await createAppointment({
+        username: values.username,
+        consultingDoctor: values.doctor,
+        hospital: values.hospital,
+        phone: values.phone,
+        date: values.date,
+        time: values.time,
+        appointmentType: values.appointmentType,
+        ...(values.appointmentType === "emergency" ? {
+          emergencyType: values.emergencyType
+        } : {})
+      });
+
+      if (result.success) {
+        toast({
+          title: "Success",
+          description: "Appointment created successfully!",
+          variant: "default",
+        });
+        form.reset();
+      } else {
+        toast({
+          title: "Error",
+          description: result.error || "Something went wrong",
+          variant: "destructive",
+        });
+
+        console.log(result.error);
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to create appointment",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
-    <Card className="w-full max-w-2xl mx-auto bg-white shadow-lg">
-      <CardHeader className=" text-primary-9 py-2">
-        <CardTitle className="text-center text-2xl font-bold">
-          APPOINTMENT
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="p-6">
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="grid grid-cols-2 gap-4"
-          >
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Name</FormLabel>
-                  <FormControl>
-                    <Input {...field} className=" border-2" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="phoneNumber"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Phone Number</FormLabel>
-                  <FormControl>
-                    <Input {...field} className=" border-2" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="emergencyType"
-              render={({ field }) => (
-                <FormItem className="">
-                  <FormLabel>Emergency Type</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger className=" border-2">
-                        <SelectValue placeholder="Select emergency type" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {emergencyTypes.map((type) => (
-                        <SelectItem key={type.id} value={type.id}>
-                          {type.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>E-Mail</FormLabel>
-                  <FormControl>
-                    <Input {...field} type="email" className=" border-2" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="date"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Date</FormLabel>
-                  <FormControl>
-                    <Input {...field} type="date" className=" border-2" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="time"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Time</FormLabel>
-                  <FormControl>
-                    <Input {...field} type="time" className=" border-2" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="doctor"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Doctor</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger className=" border-2">
-                        <SelectValue placeholder="Select doctor" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {doctors.map((doctor) => (
-                        <SelectItem key={doctor.id} value={doctor.id}>
-                          {doctor.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="department"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Department</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger className=" border-2">
-                        <SelectValue placeholder="Select department" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {departments.map((department) => (
-                        <SelectItem key={department.id} value={department.id}>
-                          {department.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+    <MotionDiv
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
 
-            <Button
-              type="submit"
-              className="col-span-2 bg-primary-7 hover:bg-[#BF100D] text-white"
-              disabled={isSubmitting}
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="grid grid-cols-2 gap-4 text-slate-800"
             >
-              {isSubmitting ? "Submitting..." : "Make an Appointment"}
-            </Button>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Username</FormLabel>
+                    <FormControl>
+                      <Input {...field} className="border-2" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Phone Number</FormLabel>
+                    <FormControl>
+                      <Input {...field} className="border-2" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="appointmentType"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Appointment Type</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="border-2">
+                          <SelectValue placeholder="Select type" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="normal">Normal</SelectItem>
+                        <SelectItem value="emergency">Emergency</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {form.watch("appointmentType") === "emergency" && (
+                <FormField
+                  control={form.control}
+                  name="emergencyType"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Emergency Type</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger className="border-2">
+                            <SelectValue placeholder="Select emergency type" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {emergencyTypes.map((type) => (
+                            <SelectItem key={type.id} value={type.id}>
+                              {type.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
+
+              <FormField
+                control={form.control}
+                name="hospital"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Hospital</FormLabel>
+                    <Select
+                      onValueChange={handleHospitalChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="border-2">
+                          <SelectValue placeholder="Select hospital" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {hospitals.map((hospital) => (
+                          <SelectItem key={hospital._id} value={hospital._id}>
+                            {hospital.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="doctor"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Doctor</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      disabled={!form.watch("hospital")}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="border-2">
+                          <SelectValue placeholder="Select doctor" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {doctors.map((doctor) => (
+                          <SelectItem key={doctor._id} value={doctor._id}>
+                            {doctor.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="date"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Date</FormLabel>
+                    <FormControl>
+                      <Input {...field} type="date" className="border-2" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="time"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Time</FormLabel>
+                    <FormControl>
+                      <Input {...field} type="time" className="border-2" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <Button
+                type="submit"
+                className="col-span-2 bg-primary-7 hover:bg-[#BF100D] text-white"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <ButtonLoader isLoading={isSubmitting} />
+                ) : (
+                  "Make an Appointment"
+                )}
+              </Button>
+            </form>
+          </Form>
+    </MotionDiv>
   );
 }
