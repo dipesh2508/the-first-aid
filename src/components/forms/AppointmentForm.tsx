@@ -26,6 +26,7 @@ import { getAllHospitals } from "@/lib/actions/hospital.actions";
 import { getDoctorsByHospital, createAppointment } from "@/lib/actions/appointment.action";
 import ButtonLoader from "@/components/shared/ButtonLoader";
 import MotionDiv from "@/components/animations/MotionDiv";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   username: z.string().min(1, "Username is required"),
@@ -50,6 +51,7 @@ export default function AppointmentForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hospitals, setHospitals] = useState<any[]>([]);
   const [doctors, setDoctors] = useState<any[]>([]);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -120,6 +122,7 @@ export default function AppointmentForm() {
       });
     } finally {
       setIsSubmitting(false);
+      router.push("/dashboard");
     }
   };
 
@@ -129,11 +132,10 @@ export default function AppointmentForm() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="grid grid-cols-2 gap-4 text-slate-800"
+              className="grid grid-cols-2 gap-4 text-slate-800 bg-white"
             >
               <FormField
                 control={form.control}

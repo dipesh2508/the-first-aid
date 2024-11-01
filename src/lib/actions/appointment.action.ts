@@ -60,3 +60,33 @@ export async function getDoctorsByHospital(hospitalId: string) {
     throw new Error(`Failed to fetch doctors: ${error.message}`);
   }
 }
+
+export async function getAllAppointments() {
+  try {
+    connectToDB();
+    const appointments = await Appointment.find();
+    return appointments;
+  } catch (error: any) {
+    throw new Error(`Failed to fetch appointments: ${error.message}`);
+  }
+}
+
+export async function getAppointmentsByUserId(userId: string) {
+  try {
+    connectToDB();
+    const appointments = await Appointment.find({ patient: userId });
+    return appointments;
+  } catch (error: any) {
+    throw new Error(`Failed to fetch appointments: ${error.message}`);
+  }
+}
+
+export async function getAppointmentsByHospital(hospitalId: string) {
+  try {
+    connectToDB();
+    const appointments = await Appointment.find({ hospital: hospitalId });
+    return appointments;
+  } catch (error: any) {
+    throw new Error(`Failed to fetch appointments: ${error.message}`);
+  }
+}
