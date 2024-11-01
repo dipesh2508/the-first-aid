@@ -30,8 +30,8 @@ export async function fetchUserbyUsername(username: string) {
 export async function fetchUser(userId: string) {
   try {
     connectToDB();
-
-    return await User.findById(userId);
+    const user = await User.findById(userId);
+    return user;
   } catch (error: any) {
     throw new Error(`Failed to fetch user: ${error.message}`);
   }
@@ -127,5 +127,62 @@ export async function submitOnboardingForm(clerkId: string, formData: Onboarding
   } catch (error: any) {
     console.error("Failed to submit onboarding form:", error);
     return { success: false, error: error.message };
+  }
+}
+
+export async function fetchUserBasicInfo(userId: string) {
+  try {
+    connectToDB();
+    const user = await User.findById(userId);
+    
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    // Return only serialized basic information
+    return {
+      _id: user._id.toString(),
+      name: user.name,
+      age: user.age,
+      gender: user.gender
+    };
+  } catch (error: any) {
+    throw new Error(`Failed to fetch user basic info: ${error.message}`);
+  }
+}
+
+export async function fetchUserAndPatientInfo(userId: string) {
+  try {
+    connectToDB();
+    const user = await User.findById(userId);
+    
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    // Fetch patient data using patientId from user
+    const patient = await Patient.findById(user.patientId);
+    
+    if (!patient) {
+      throw new Error('Patient record not found');
+    }
+
+    // Return serialized user and patient information
+    return {
+      _id: user._id.toString(),
+      name: user.name,
+      age: user.age,
+      gender: user.gender,
+      patientInfo: {
+        _id: patient._id.toString(),
+        allergies: patient.allergies || [],
+        medicalConditions: patient.medicalConditions || [],
+        medications: patient.medications || [],
+        bloodGroup: patient.bloodGroup,
+        bp: patient.bp
+      }
+    };
+  } catch (error: any) {
+    throw new Error(`Failed to fetch user and patient info: ${error.message}`);
   }
 }

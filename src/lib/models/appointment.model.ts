@@ -25,7 +25,7 @@ const appointmentSchema = new mongoose.Schema<IAppointment>(
       required: true,
     },
     consultingDoctor: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
     phone: {
