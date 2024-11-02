@@ -39,7 +39,7 @@ const HospitalSelector = ({ hospitals }: Props) => {
             <option value="">All Hospitals</option>
             {hospitals.map((hospital) => (
               <option key={hospital._id.toString()} value={hospital._id.toString()}>
-                {hospital.name} - {hospital.city}
+                {hospital.name}
               </option>
             ))}
           </select>

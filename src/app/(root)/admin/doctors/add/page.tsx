@@ -19,7 +19,15 @@ const Page = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="mb-8 text-center"
           >
-            <Image src={logo} alt="logo" className="mx-auto h-24 w-auto" />
+            <Image
+              src={logo}
+              alt="logo"
+              className="mx-auto h-24 w-auto"
+              style={{
+                filter:
+                  "brightness(0) saturate(100%) invert(15%) sepia(95%) saturate(6932%) hue-rotate(359deg) brightness(100%) contrast(124%)",
+              }}
+            />
             <h1 className="text-3xl font-bold text-primary-9 mb-2">
               Add New Doctor
             </h1>

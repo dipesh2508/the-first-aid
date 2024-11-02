@@ -16,18 +16,20 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-interface DataTableProps<TData, TValue> {
+interface DataTableProps<TData extends { _id: string }, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   title: string;
   tableHeadClassName?: string;
+  onRowClick?: (row: HTMLTableRowElement) => void;
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends { _id: string }, TValue>({
   columns,
   data,
   title,
   tableHeadClassName,
+  onRowClick,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -65,7 +67,10 @@ export function DataTable<TData, TValue>({
             table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}
-                className="hover:bg-pink-100 even:bg-pink-50"
+                data-appointment-id={row.original._id}
+                onClick={(e) => onRowClick?.(e.currentTarget)}
+                className="cursor-pointer hover:bg-gray-100"
+                data-state={row.getIsSelected() && "selected"}
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell

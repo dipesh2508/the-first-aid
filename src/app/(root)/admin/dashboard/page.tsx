@@ -7,7 +7,7 @@ import React from 'react'
 
 // Add these components - create them in a new components folder
 import HospitalSelector from '@/components/shared/HospitalSelector';
-import AppointmentsTable from '@/components/shared/AppointmentsTable';
+import AppointmentsTable from '@/components/shared/appointments/AppointmentsTable';
 
 const Page = async () => {
     const user = await currentUser();
