@@ -9,6 +9,7 @@ enum BP {
 export interface IPatient {
   clerkId: string;
   nominees: string[];
+  beneficiary: string[];
   emergencyContacts: string[];
   bloodGroup: string;
   bp: string;
@@ -24,6 +25,12 @@ const PatientSchema = new mongoose.Schema<IPatient>(
       type: String,
     },
     nominees: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    beneficiary: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",

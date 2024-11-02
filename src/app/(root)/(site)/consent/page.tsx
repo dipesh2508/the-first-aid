@@ -38,7 +38,7 @@ const ConsentPage = async () => {
   return (
 
     <div className="container mx-auto p-4 text-black max-h-screen h-[90vh] overflow-y-auto">
-        {consentNeeded ? <ConsentForm {...demoProps} /> : <div>Consent not needed</div>}
+      {/* Consent Response form to be added here */}
     </div>
 
   );
