@@ -5,6 +5,28 @@ import { Appointment } from "../models/appointment.model";
 import { revalidatePath } from "next/cache";
 import { Doctor } from "../models/doctor.model";
 import { fetchUserbyUsername } from "./user.actions";
+import { NextResponse } from "next/server";
+
+export async function getAppointmentById(id: string) {
+  try {
+    await connectToDB();
+    const appointment = await Appointment.findById(id);
+
+    if (!appointment) {
+      throw new Error("Appointment not found");
+    }
+
+    return {
+      ...appointment.toObject(),
+      _id: appointment._id.toString(),
+      patient: appointment.patient.toString(),
+      consultingDoctor: appointment.consultingDoctor.toString(),
+      hospital: appointment.hospital.toString(),
+    };
+  } catch (error: any) {
+    throw new Error(`Failed to fetch appointment: ${error.message}`);
+  }
+}
 
 interface CreateAppointmentParams {
   username: string;
@@ -37,16 +59,17 @@ export async function createAppointment(params: CreateAppointmentParams) {
       emergencyType: params.emergencyType,
       status: "pending",
       consent: false,
+      consentRequest: false,
     });
 
     await newAppointment.save();
 
-    revalidatePath('/appointments');
+    revalidatePath("/appointments");
     return { success: true };
   } catch (error: any) {
     return {
       success: false,
-      error: `Failed to create appointment: ${error.message}`
+      error: `Failed to create appointment: ${error.message}`,
     };
   }
 }
@@ -88,5 +111,41 @@ export async function getAppointmentsByHospital(hospitalId: string) {
     return appointments;
   } catch (error: any) {
     throw new Error(`Failed to fetch appointments: ${error.message}`);
+  }
+}
+
+export async function updateAppointmentConsent(
+  appointmentId: string,
+  consentData: {
+    surgeryType: string;
+    riskInvolved: string;
+    treatmentType: string;
+  }
+) {
+  try {
+    connectToDB();
+
+    const appointment = await Appointment.findByIdAndUpdate(
+      appointmentId,
+      {
+        ...consentData,
+        consentRequest: true,
+      },
+      { new: true }
+    );
+
+    if (!appointment) {
+      throw new Error("Appointment not found");
+    }
+
+    await appointment.save();
+
+    revalidatePath("/appointments");
+    return { success: true, appointment };
+  } catch (error: any) {
+    return {
+      success: false,
+      error: `Failed to update appointment consent: ${error.message}`,
+    };
   }
 }

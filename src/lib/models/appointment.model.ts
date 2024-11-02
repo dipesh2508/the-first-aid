@@ -4,7 +4,7 @@ interface IAppointment {
   patient: mongoose.Schema.Types.ObjectId;
   consultingDoctor: mongoose.Schema.Types.ObjectId;
   surgeryType: string;
-  phone:string;
+  phone: string;
   riskInvolved: string;
   hospital: mongoose.Schema.Types.ObjectId;
   date: string;
@@ -13,9 +13,9 @@ interface IAppointment {
   appointmentType: string;
   emergencyType?: string;
   consent: boolean;
+  consentRequest: boolean;
   treatmentType?: string;
 }
-
 
 const appointmentSchema = new mongoose.Schema<IAppointment>(
   {
@@ -78,9 +78,15 @@ const appointmentSchema = new mongoose.Schema<IAppointment>(
       required: true,
       default: false,
     },
+    consentRequest: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
   { timestamps: true }
-
 );
 
-export const Appointment = mongoose.models.Appointment || mongoose.model("Appointment", appointmentSchema);
+export const Appointment =
+  mongoose.models.Appointment ||
+  mongoose.model("Appointment", appointmentSchema);

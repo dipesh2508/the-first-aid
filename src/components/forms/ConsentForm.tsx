@@ -1,97 +1,215 @@
-import React from 'react';
-import ConsentFormAction from '@/components/forms/ConsentFormAction';
+"use client";
+
+import React, { useEffect, useState } from "react";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import ButtonLoader from "@/components/shared/ButtonLoader";
+import { useToast } from "@/hooks/use-toast";
+import { fetchUserAndPatientInfo } from "@/lib/actions/user.actions";
+import {
+  updateAppointmentConsent,
+  getAppointmentById,
+} from "@/lib/actions/appointment.action";
+import { Textarea } from "@/components/ui/textarea";
+import ConsentFormSkeleton from "../skeletons/ConsentFormSkeleton";
+
+interface ConsentFormData {
+  surgeryType: string;
+  riskInvolved: string;
+  treatmentType: string;
+}
 
 interface PatientInfo {
   name: string;
   age: number;
-  id: string;
-  accidentDetails: string;
+  gender: string;
+  patientInfo: {
+    bloodGroup: string;
+    bp: string;
+    allergies: string[];
+    medicalConditions: string[];
+    medications: string[];
+  };
 }
 
-interface SurgeryInfo {
-  name: string;
-  consultingDoctor: string;
-  type: string;
-  duration: string;
-  risks: string;
-}
 
-interface GuardianInfo {
-  name: string;
-  relation: string;
-  contactNumber: string;
-}
 
-interface ConsentFormProps {
-  patientInfo: PatientInfo;
-  date: string;
-  time: string;
-  surgeryInfo: SurgeryInfo;
-  guardianInfo: GuardianInfo;
-}
+const ConsentForm = ({ appointmentId }: { appointmentId: string }) => {
+  const router = useRouter();
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [patientInfo, setPatientInfo] = useState<PatientInfo | null>(null);
 
-const ConsentForm: React.FC<ConsentFormProps> = ({ patientInfo, date, time, surgeryInfo, guardianInfo }) => {
+  const form = useForm<ConsentFormData>({
+    defaultValues: {
+      surgeryType: "",
+      riskInvolved: "",
+      treatmentType: "",
+    },
+  });
+
+  useEffect(() => {
+    const fetchPatientDetails = async () => {
+      try {
+        const appointment = await getAppointmentById(appointmentId);
+        const patientData = await fetchUserAndPatientInfo(appointment.patient);
+        setPatientInfo(patientData);
+      } catch (error) {
+        console.error("Error fetching patient details:", error);
+        toast({
+          title: "Error",
+          description: "Failed to fetch patient details",
+          variant: "destructive",
+        });
+      }
+    };
+
+    fetchPatientDetails();
+  }, [appointmentId, toast]);
+
+  const onSubmit = async (data: ConsentFormData) => {
+    setIsSubmitting(true);
+    try {
+      const result = await updateAppointmentConsent(appointmentId, data);
+      if (result.success) {
+        toast({
+          title: "Consent Request Sent",
+          description: "The consent request has been sent successfully!",
+          variant: "default",
+        });
+        router.push("/appointments");
+      } else {
+        toast({
+          title: "Error",
+          description: result.error || "Something went wrong",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An error occurred during form submission",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (!patientInfo) {
+    return <ConsentFormSkeleton />;
+  }
+
   return (
-    <div className="consent-form bg-pink-50 p-8 rounded-lg shadow-md max-w-3xl mx-auto">
-      <h1 className="text-3xl font-bold text-red-800 mb-6">Emergency Surgery Consent Form</h1>
-      
-      <div className="hospital-info mb-6">
-        <h2 className="text-2xl font-semibold text-red-700 mb-2">AIIMS Hospital, New Delhi</h2>
-        <p className="text-gray-700">All India Institute of Medical Sciences</p>
-        <p className="text-gray-700">Ansari Nagar, New Delhi - 110029</p>
-        <p className="text-gray-700">Contact Number: (011) 26588500</p>
-        <p className="text-gray-700">Emergency Helpline: (011) 26588700</p>
+    <div className="space-y-8">
+      <div className="bg-gray-50 p-6 rounded-lg">
+        <h2 className="text-xl font-semibold mb-4">Patient Information</h2>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <p>
+              <strong>Name:</strong> {patientInfo.name}
+            </p>
+            <p>
+              <strong>Age:</strong> {patientInfo.age}
+            </p>
+            <p>
+              <strong>Gender:</strong> {patientInfo.gender}
+            </p>
+          </div>
+          <div>
+            <p>
+              <strong>Blood Group:</strong> {patientInfo.patientInfo.bloodGroup}
+            </p>
+            <p>
+              <strong>BP:</strong> {patientInfo.patientInfo.bp}
+            </p>
+            <p>
+              <strong>Allergies:</strong>{" "}
+              {patientInfo.patientInfo.allergies.join(", ") || "None"}
+            </p>
+          </div>
+        </div>
+        <div className="mt-4">
+          <p>
+            <strong>Medical Conditions:</strong>{" "}
+            {patientInfo.patientInfo.medicalConditions.join(", ") || "None"}
+          </p>
+          <p>
+            <strong>Current Medications:</strong>{" "}
+            {patientInfo.patientInfo.medications.join(", ") || "None"}
+          </p>
+        </div>
       </div>
 
-      <div className="form-details mb-6">
-        <h3 className="text-xl font-semibold text-red-700 mb-2">Emergency Surgery Consent Form</h3>
-        <p className="text-gray-700">Date: {date}</p>
-        <p className="text-gray-700">Time: {time}</p>
-      </div>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <FormField
+            control={form.control}
+            name="surgeryType"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Surgery Type</FormLabel>
+                <FormControl>
+                  <Input {...field} required />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-      <div className="patient-info mb-6">
-        <h3 className="text-xl font-semibold text-red-700 mb-2">Patient Information</h3>
-        <ul className="list-disc list-inside text-gray-700">
-          <li>Patient Name: {patientInfo.name}</li>
-          <li>Age: {patientInfo.age} years</li>
-          <li>Patient ID: {patientInfo.id}</li>
-          <li>Accident Details: {patientInfo.accidentDetails}</li>
-        </ul>
-      </div>
+          <FormField
+            control={form.control}
+            name="treatmentType"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Treatment Type</FormLabel>
+                <FormControl>
+                  <Input {...field} required />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-      <div className="surgery-info mb-6">
-        <h3 className="text-xl font-semibold text-red-700 mb-2">Proposed Surgery Information</h3>
-        <ul className="list-disc list-inside text-gray-700">
-          <li>Surgery Name: {surgeryInfo.name}</li>
-          <li>Consulting Doctor: {surgeryInfo.consultingDoctor}</li>
-          <li>Surgery Type: {surgeryInfo.type}</li>
-          <li>Expected Duration: {surgeryInfo.duration}</li>
-          <li>Risks Involved: {surgeryInfo.risks}</li>
-        </ul>
-      </div>
+          <FormField
+            control={form.control}
+            name="riskInvolved"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Risks Involved</FormLabel>
+                <FormControl>
+                  <Textarea
+                    {...field}
+                    required
+                    placeholder="Please detail all potential risks"
+                    className="min-h-[100px]"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-      <div className="guardian-info mb-6">
-        <h3 className="text-xl font-semibold text-red-700 mb-2">Guardian Information</h3>
-        <ul className="list-disc list-inside text-gray-700">
-          <li>Guardian Name: {guardianInfo.name}</li>
-          <li>Relation to Patient: {guardianInfo.relation}</li>
-          <li>Contact Number: {guardianInfo.contactNumber}</li>
-        </ul>
-      </div>
-
-      <div className="consent-declaration mb-6">
-        <h3 className="text-xl font-semibold text-red-700 mb-2">Consent Declaration</h3>
-        <p className="text-gray-700">
-          I, {guardianInfo.name}, the legal guardian of {patientInfo.name}, give my informed consent for the above-mentioned surgery
-          to be performed at AIIMS Hospital, New Delhi. I understand the urgency and necessity of the procedure and the
-          potential risks involved. I authorize the medical team to proceed with the required emergency treatment as
-          advised by the consulting doctor.
-        </p>
-      </div>
-
-      <ConsentFormAction 
-        patientName={patientInfo.name}
-      />
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full bg-primary-6 text-white"
+          >
+            {isSubmitting && <ButtonLoader isLoading={isSubmitting} />}
+            Send Consent Request
+          </Button>
+        </form>
+      </Form>
     </div>
   );
 };
