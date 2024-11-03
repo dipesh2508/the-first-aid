@@ -91,11 +91,22 @@ export const createAppointmentColumns = (
     header: () => <div className="font-semibold text-white text-center">Consent Form</div>,
     cell: ({ row }) => (
       <div className="text-center">
-        <Link href={`/admin/consent/${row.original._id}`}>
-          <Button variant="destructive" size="sm" className="bg-red-800 hover:bg-red-900">
-            Request
+        {row.original.consent ? (
+          <Button
+            variant="secondary"
+            size="sm"
+            disabled
+            className="bg-green-800 hover:bg-green-800 text-white cursor-not-allowed"
+          >
+            Completed
           </Button>
-        </Link>
+        ) : (
+          <Link href={`/admin/consent/${row.original._id}`}>
+            <Button variant="destructive" size="sm" className="bg-red-800 hover:bg-red-900">
+              Request
+            </Button>
+          </Link>
+        )}
       </div>
     ),
   },

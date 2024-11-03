@@ -29,14 +29,24 @@ export const AppointmentSheet = ({ appointment, isOpen, onOpenChange }: Appointm
             <MedicalSection patientInfo={appointment.patient?.patientInfo} />
             <AppointmentSection appointment={appointment} />
             <div className="pt-4">
-              <Link href={`/admin/consent/${appointment._id}`}>
+              {appointment.consent ? (
                 <Button 
-                  variant="destructive" 
-                  className="w-full bg-red-800 hover:bg-red-900"
+                  variant="secondary" 
+                  disabled
+                  className="w-full bg-green-800 hover:bg-green-800 text-white cursor-not-allowed"
                 >
-                  Request Consent
+                  Consent Completed
                 </Button>
-              </Link>
+              ) : (
+                <Link href={`/admin/consent/${appointment._id}`}>
+                  <Button 
+                    variant="destructive" 
+                    className="w-full bg-red-800 hover:bg-red-900"
+                  >
+                    Request Consent
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
         </div>

@@ -6,6 +6,7 @@ import { Patient } from "../models/patient.model";
 import { User } from "../models/user.model";
 import { Appointment } from "../models/appointment.model";
 import { NextResponse } from "next/server";
+import { getAppointmentById } from "./appointment.action";
 
 export async function getPatientById(patientId: string) {
   try {
@@ -90,22 +91,54 @@ export async function addNominee(patientId: string, nomineeUserName: string) {
   }
 }
 
-export async function checkIfConsentNeeded(patientId: string) {
+export async function returnAllConsentsRequired(userId: string) {
   try {
     connectToDB();
-    const patient = await Patient.findById(patientId);
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return { message: "User not found", status: 404, success: false };
+    }
+
+    const patient = await Patient.findById(user.patientId);
     if (!patient) {
-      throw new Error("Patient not found");
+      return { message: "Patient not found", status: 404, success: false };
     }
 
-    const nominees = patient.nominees;
-    if (!nominees || nominees.length === 0) {
-      return false; // No nominees, so no consent needed
+    const beneficiary = patient.beneficiary;
+    if (beneficiary.length === 0) {
+      return { message: "No beneficiaries found", status: 404, success: false };
     }
 
-    const appointments = await Appointment.find({ patient: { $in: nominees } });
+    const beneficiaryUsers = await User.find({ _id: { $in: beneficiary } });
 
-    return appointments.length > 0; // Consent needed if there are any appointments for nominees
+    const beneficiaryPatients: any[] = [];
+    for (const user of beneficiaryUsers) {
+      const patient = await Patient.findById(user.patientId);
+      beneficiaryPatients.push(patient);
+    }
+
+    const allAppointments: any[] = [];
+    for (const patient of beneficiaryPatients) {
+      if (patient?.appointments && Array.isArray(patient.appointments)) {
+        allAppointments.push(...patient.appointments);
+      }
+    }
+
+    if (allAppointments.length === 0) {
+      return { message: "No appointments found", status: 404, success: false };
+    }
+
+    const consentRequired: any[] = [];
+
+    for (const appointmentId of allAppointments) {
+      const appointmentDetails = await getAppointmentById(appointmentId);
+      if (appointmentDetails?.consentRequest && !appointmentDetails?.consent) {
+        consentRequired.push(appointmentDetails._id.toString());
+      }
+    }
+
+    return consentRequired;
   } catch (error: any) {
     throw new Error(`Failed to check if consent needed: ${error.message}`);
   }

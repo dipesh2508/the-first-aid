@@ -37,3 +37,16 @@ export async function addDoctor(params: AddDoctorParams) {
     };
   }
 }
+
+export async function getDoctorById(doctorId: string) {
+  try {
+    connectToDB();
+    const doctor = await Doctor.findById(doctorId);
+    return doctor
+  } catch (error: any) {
+    return {
+      success: false,
+      error: `Failed to get doctor: ${error.message}`
+    };
+  }
+}

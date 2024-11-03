@@ -7,6 +7,7 @@ import { Doctor } from "../models/doctor.model";
 import { fetchUserbyUsername } from "./user.actions";
 import { NextResponse } from "next/server";
 import { getPatientById } from "./patient.actions";
+import { User } from "../models/user.model";
 
 export async function getAppointmentById(id: string) {
   try {
@@ -159,6 +160,40 @@ export async function updateAppointmentConsent(
     return {
       success: false,
       error: `Failed to update appointment consent: ${error.message}`,
+    };
+  }
+}
+
+export async function submitAppointmentConsent(
+  userId: string,
+  appointmentId: string,
+  submittedMpin: number
+) {
+  try {
+    connectToDB();
+    
+    const user = await User.findById(userId);
+    console.log(user.mpin, submittedMpin);
+    if (!user || user.mpin !== submittedMpin) {
+      return { success: false, error: "Invalid MPIN" };
+    }
+
+    const appointment = await Appointment.findByIdAndUpdate(
+      appointmentId,
+      { consent: true },
+      { new: true }
+    );
+
+    if (!appointment) {
+      return { success: false, error: "Appointment not found" };
+    }
+
+    revalidatePath("/appointments");
+    return { success: true };
+  } catch (error: any) {
+    return {
+      success: false,
+      error: `Failed to submit consent: ${error.message}`,
     };
   }
 }

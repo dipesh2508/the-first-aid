@@ -21,9 +21,6 @@ const Page: React.FC = async () => {
     redirect("/onboarding");
   }
 
-  if (!userData?.mpin) {
-    redirect("/mpin-setup");
-  }
 
   const containerVariants = {
     hidden: { opacity: 0 },
