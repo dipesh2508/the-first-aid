@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 import { Doctor } from "../models/doctor.model";
 import { fetchUserbyUsername } from "./user.actions";
 import { NextResponse } from "next/server";
+import { getPatientById } from "./patient.actions";
 
 export async function getAppointmentById(id: string) {
   try {
@@ -64,9 +65,21 @@ export async function createAppointment(params: CreateAppointmentParams) {
 
     await newAppointment.save();
 
+    const patientSchema = await getPatientById(patient.patientId);
+
+    if (patientSchema) {
+      if (!patientSchema.appointments) {
+        patientSchema.appointments = [];
+      }
+      
+      patientSchema.appointments.push(newAppointment._id);
+      await patientSchema.save();
+    }
+
     revalidatePath("/appointments");
     return { success: true };
   } catch (error: any) {
+    console.error(error);
     return {
       success: false,
       error: `Failed to create appointment: ${error.message}`,

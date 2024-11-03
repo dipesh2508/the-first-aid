@@ -13,6 +13,7 @@ export interface IPatient {
   emergencyContacts: string[];
   bloodGroup: string;
   bp: string;
+  appointments?: string[];
   allergies?: string[];
   medicalConditions?: string[];
   medications?: string[];
@@ -63,6 +64,13 @@ const PatientSchema = new mongoose.Schema<IPatient>(
     medications: [
       {
         type: String,
+      },
+    ],
+    appointments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Appointment",
+        required: false,
       },
     ],
     surgeries: [
