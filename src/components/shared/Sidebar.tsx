@@ -14,7 +14,7 @@ interface SidebarItem {
   route: string;
 }
 
-const sidebarItems: SidebarItem[] = [
+export const sidebarItems: SidebarItem[] = [
   { id: 'home', label: 'Home', icon: FaHome, route: '/dashboard' },
   { id: 'profile', label: 'Profile', icon: FaUser, route: '/profile' },
   { id: 'beneficiary', label: 'Legal Guardians', icon: FaUserFriends, route: '/beneficiary' },

@@ -17,8 +17,8 @@ interface userLinks {
 export const userLinksProfile: userLinks[] = [
   {
     title: "Profile",
-    name: "Dipesh",
-    link: "#",
+    name: "Your Profile",
+    link: "/profile",
     linkText: "Visit Profile",
     Icon: FaRegCircleUser,
     isReversed: false,
@@ -26,7 +26,7 @@ export const userLinksProfile: userLinks[] = [
   {
     title: "Legal Guardians",
     name: "Keep your family informed, always",
-    link: "#",
+    link: "/beneficiary",
     linkText: "Add Beneficiaries",
     Icon: FaUserPlus,
     isReversed: true,
@@ -37,7 +37,7 @@ export const userLinksEmergency: userLinks[] = [
   {
     title: "Appointment",
     name: "Connect with Doctor",
-    link: "#",
+    link: "/appointment",
     linkText: "Connect",
     Icon: FaRegCalendarPlus,
     isReversed: false,
@@ -45,7 +45,7 @@ export const userLinksEmergency: userLinks[] = [
   {
     title: "Remote consent",
     name: "Grant consent, at your convenience",
-    link: "/user/consent",
+    link: "/consent",
     linkText: "Grant",
     Icon: FaRegCheckCircle,
     isReversed: true,
@@ -53,7 +53,7 @@ export const userLinksEmergency: userLinks[] = [
   {
     title: "Fill Form Instantly",
     name: "Fill in a Flash, Focus on Getting Better",
-    link: "/dashboard/emergency",
+    link: "/appointment",
     linkText: "Fill Form",
     Icon: PiNotepadBold,
     isReversed: false,
