@@ -7,6 +7,7 @@ import dr from "@/assets/dr.png";
 import { GoChevronRight } from "react-icons/go";
 import { Button } from "../ui/button";
 import MotionDiv from "@/components/animations/MotionDiv";
+import "@/app/globals.css";
 
 const Hero = () => {
   return (
@@ -49,15 +50,15 @@ const Hero = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="p-6 py-8 lg:relative bg-red-600 grid grid-cols-1 lg:grid-cols-5 text-gray-50 lg:mx-12 mx-8 rounded-3xl"
+        className="p-6 py-8 lg:relative bg-primary-6 grid grid-cols-1 lg:grid-cols-5 text-gray-50 lg:mx-12 mx-8 rounded-3xl"
       >
         <MotionDiv
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="lg:absolute lg:w-[475px] w-96 lg:left-24 lg:bottom-0 "
+          className="relative w-64 lg:absolute lg:w-[475px] lg:left-24 lg:bottom-0 mx-auto"
         >
-          <Image alt="" src={heroDoctor} className="w-full lg:left-0" />
+          <Image alt="" src={heroDoctor} className="w-full" />
         </MotionDiv>
         <div className="col-span-1 lg:col-span-2"></div>
         <div className="container mx-auto col-span-3">
@@ -93,9 +94,9 @@ const Hero = () => {
               transition={{ type: "spring", stiffness: 300 }}
             >
               <Link href="#" rel="noreferrer noopener">
-                <div className="px-5 mt-4 lg:mt-0 py-6 rounded-md border bg-primary-9 text-gray-50 border-gray-600 flex flex-col items-center justify-center gap-2 hover:bg-primary-8 transition duration-300 ease-in-out focus:outline-none focus:ring focus:ring-primary-4">
-                  <GoChevronRight className="text-center size-16 font-light" />
-                  <h3>Emergency</h3>
+                <div className="shine-effect px-6 mt-4 lg:mt-0 py-6 rounded-xl border-2 bg-primary-9 text-gray-50 border-primary-7/30 flex flex-col items-center justify-center gap-3 transition-all duration-300 ease-in-out shadow-lg hover:shadow-primary-8/20 focus:outline-none focus:ring-2 focus:ring-primary-4">
+                  <GoChevronRight className="text-center size-16 font-light text-primary-2" />
+                  <h3 className="font-semibold tracking-wide">Emergency</h3>
                 </div>
               </Link>
             </MotionDiv>

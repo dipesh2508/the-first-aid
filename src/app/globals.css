@@ -19,7 +19,6 @@
   background: #720a08;
 }
 
-
 body {
   color: var(--foreground);
   background: var(--background);
@@ -95,4 +94,29 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.shine-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine-effect::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  left: -100%;
+  transition: 0.9s;
+}
+
+.shine-effect:hover::before {
+  left: 100%;
 }

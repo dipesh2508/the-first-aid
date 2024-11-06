@@ -25,9 +25,9 @@ const slideInRightVariants = {
 
 const About = () => {
   return (
-    <section className="lg:mt-24 mt-8 mx-8 md:mx-0">
-      <div className="mx-auto px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
-        <div className="grid grid-cols-1 gap-8 content-center lg:grid-cols-2 lg:gap-0">
+    <section className="lg:mb-24 lg:mt-36 my-16 mx-auto max-w-7xl">
+      <div className="px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16 items-center">
           <MotionDiv
             variants={slideInLeftVariants}
             initial="hidden"
@@ -51,7 +51,7 @@ const About = () => {
             whileInView="visible"
             viewport={{ once: true, amount: 0.5 }}
             transition={{ duration: 0.5 }}
-            className="flex lg:py-12 flex-col justify-center lg:justify-start"
+            className="flex flex-col space-y-6"
           >
             <MotionDiv
               variants={fadeInVariants}
@@ -60,7 +60,7 @@ const About = () => {
               viewport={{ once: true, amount: 0.5 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <h2 className="text-3xl font-bold text-center md:text-left sm:text-5xl text-gray-950">
+              <h2 className="text-4xl font-bold text-center md:text-left sm:text-5xl text-gray-900 leading-tight">
                 Time is critical. Grant consent remotely, instantly
               </h2>
             </MotionDiv>
@@ -72,7 +72,7 @@ const About = () => {
               viewport={{ once: true, amount: 0.5 }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              <p className="mt-4 text-gray-600 text-center md:text-left">
+              <p className="mt-4 text-lg text-gray-600 text-center md:text-left leading-relaxed">
                 The First Aid app cuts through delays and paperwork in
                 emergencies. With a single click, you can grant remote consent
                 for procedures, allowing doctors to begin treatment faster. This
@@ -80,6 +80,7 @@ const About = () => {
                 your loved ones. Every second counts. Be prepared and at ease.
               </p>
             </MotionDiv>
+
             <MotionDiv
               variants={slideUpVariants}
               initial="hidden"
@@ -87,13 +88,9 @@ const About = () => {
               viewport={{ once: true, amount: 0.5 }}
               transition={{ duration: 0.5, delay: 0.6 }}
               whileHover={{ scale: 1.05 }}
-              className="mx-auto mt-8 md:mx-0 h-fit w-fit"
+              className="mx-auto md:mx-0 h-fit w-fit"
             >
-              <Button
-                className="inline-block rounded bg-primary-6 text-sm font-medium text-white transition hover:bg-primary-7 focus:outline-none focus:ring focus:ring-primary-4 py-2 px-4"
-              >
-                Consent
-              </Button>
+              <Button className="bg-primary-6 text-white">Consent</Button>
             </MotionDiv>
           </MotionDiv>
         </div>

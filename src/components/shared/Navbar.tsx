@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import { Button } from "../ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -29,23 +29,24 @@ const Navbar = () => {
         <header className="p-4 font-light relative text-black">
           <div className="container flex justify-between h-12 mx-auto">
             <div className="flex justify-between gap-x-12">
-                <Link
-                  rel="noopener noreferrer"
-                  href="#"
-                  aria-label="Back to homepage"
-                  className="flex items-center p-2"
-                >
-                  <Image
-                    src={logo}
-                    alt="logo"
-                    className="p-4"
-                    height={200}
-                    width={200}
-                    style={{
-                      filter: 'brightness(0) saturate(100%) invert(15%) sepia(95%) saturate(6932%) hue-rotate(359deg) brightness(100%) contrast(124%)',
-                    }}
-                  />
-                </Link>
+              <Link
+                rel="noopener noreferrer"
+                href="#"
+                aria-label="Back to homepage"
+                className="flex items-center p-2"
+              >
+                <Image
+                  src={logo}
+                  alt="logo"
+                  className="p-4"
+                  height={200}
+                  width={200}
+                  style={{
+                    filter:
+                      "brightness(0) saturate(100%) invert(15%) sepia(95%) saturate(6932%) hue-rotate(359deg) brightness(100%) contrast(124%)",
+                  }}
+                />
+              </Link>
               <button
                 data-collapse-toggle="navbar-default"
                 type="button"
@@ -97,9 +98,11 @@ const Navbar = () => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                <Button variant={"ghost"} className="font-light">
-                  For Doctors
-                </Button>
+                <Link href="/admin/dashboard">
+                  <Button variant={"ghost"} className="font-light">
+                    For Doctors
+                  </Button>
+                </Link>
               </motion.div>
               <Separator orientation="vertical" className="h-8 w-[3px]" />
               <motion.div

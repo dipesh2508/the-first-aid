@@ -7,7 +7,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 // import required modules
-import { Autoplay, Pagination } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
 import Image from "next/image";
 import { sliderImage } from "@/lib/constant/image";
 import MotionDiv from "@/components/animations/MotionDiv";
@@ -24,61 +24,61 @@ const slideUpVariants = {
 
 const Slider = () => {
   return (
-    <section>
-      <div className="mx-auto  px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:pb-16 lg:py-0">
-        <div className="grid grid-cols-1 justify-items-center gap-y-2 gap-x-16">
-          <MotionDiv
-            variants={fadeInVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.5 }}
-            className="h-64 w-80 lg:w-[845px] lg:h-[541px] overflow-hidden rounded-lg  order-last"
-          >
-            <Swiper
-              modules={[Autoplay, Pagination]}
-              slidesPerView={1}
-              loop={true}
-              autoplay={{
-                delay: 3500,
-                disableOnInteraction: false,
-                pauseOnMouseEnter: true,
-              }}
-              pagination={{
-                clickable: true,
-              }}
-              className="mySwiper "
-            >
-              {sliderImage.map((menu, index) => {
-                return (
-                  <SwiperSlide key={index} className="w-full px-16">
-                    <Image
-                      width={500}
-                      height={500}
-                      src={menu.link}
-                      className=" inset-0 object-cover"
-                      alt="..."
-                      style={{ width: "100%", height: "auto" }}
-                    />
-                  </SwiperSlide>
-                );
-              })}
-            </Swiper>
-          </MotionDiv>
-
+    <section className="bg-gradient-to-b from-white to-gray-50">
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+        <div className="grid grid-cols-1 justify-items-center gap-y-8 lg:gap-y-16">
           <MotionDiv
             variants={slideUpVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.5 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="lg:py-12"
+            className="max-w-7xl text-center"
           >
-            <h2 className="text-2xl text-center font-bold md:font-semibold lg:text-5xl text-gray-950">
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl lg:text-5xl">
               Paperwork?
-              <br />
-              We got this. Use instant forms, and ditch the stress.
+              <span className="block mt-2 text-primary-600">
+                We got this. Use instant forms, and ditch the stress.
+              </span>
             </h2>
+          </MotionDiv>
+
+          <MotionDiv
+            variants={fadeInVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.5 }}
+            className="w-full max-w-[845px]"
+          >
+            <div className="relative rounded-2xl shadow-2xl overflow-hidden">
+              <Swiper
+                modules={[Autoplay]}
+                slidesPerView={1}
+                loop={true}
+                autoplay={{
+                  delay: 3500,
+                  disableOnInteraction: false,
+                  pauseOnMouseEnter: true,
+                }}
+                className="aspect-[16/10] w-full"
+              >
+                {sliderImage.map((menu, index) => (
+                  <SwiperSlide key={index}>
+                    <div className="relative h-full w-full">
+                      <Image
+                        width={845}
+                        height={541}
+                        src={menu.link}
+                        className="object-cover object-center w-full h-full"
+                        alt="Slider image"
+                        priority={index === 0}
+                      />
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
           </MotionDiv>
         </div>
       </div>
