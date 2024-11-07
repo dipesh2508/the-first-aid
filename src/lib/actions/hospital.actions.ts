@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { connectToDB } from "../mongoose";
-import { Hospital, IHospital } from "../models/hospital.model";
+import { Hospital } from "../models/hospital.model";
 import { Appointment } from "../models/appointment.model";
 import { User } from "../models/user.model";
 import { format } from 'date-fns';
@@ -30,14 +30,13 @@ export async function getHospitalById(hospitalId: string) {
   }
 }
 
-export async function getHospitalsByLocation(location: string): Promise<IHospital[]> {
+export async function getHospitalsByLocation(location: string) {
   try {
     connectToDB();
     const hospitals = await Hospital.find({
       address: { $regex: new RegExp(location, 'i') }
-    }).lean();
-
-    return JSON.parse(JSON.stringify(hospitals));
+    });
+    return hospitals;
   } catch (error: any) {
     throw new Error(`Failed to fetch hospitals: ${error.message}`);
   }
