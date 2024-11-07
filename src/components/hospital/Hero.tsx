@@ -89,7 +89,7 @@ const Hero = () => {
           </MotionDiv>
         </div>
       </div>
-      <MotionDiv variants={itemVariants} className="w-full mx-24 my-12">
+      <MotionDiv variants={itemVariants} className="w-full px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24 mx-auto my-12">
         {hospitals.length > 0 && (
           <div className="container mx-auto flex flex-col">
             <h1 className="text-4xl font-bold text-primary-8 mb-4">
