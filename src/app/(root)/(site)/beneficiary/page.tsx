@@ -16,7 +16,7 @@ const page = async () => {
   const serializedName = String(userInfo.name);
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-primary-1/50 to-white py-10 w-full">
+    <main className="h-screen overflow-y-scroll bg-gradient-to-b from-primary-1/50 to-white py-10 w-full">
       <div className="container max-w-3xl mx-auto px-4 w-full">
         <MotionDiv
           initial={{ opacity: 0, y: 20 }}
