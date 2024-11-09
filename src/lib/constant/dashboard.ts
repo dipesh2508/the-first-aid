@@ -37,7 +37,7 @@ export const userLinksEmergency: userLinks[] = [
   {
     title: "Appointment",
     name: "Connect with Doctor",
-    link: "/appointment",
+    link: "/appointments",
     linkText: "Connect",
     Icon: FaRegCalendarPlus,
     isReversed: false,
@@ -53,7 +53,7 @@ export const userLinksEmergency: userLinks[] = [
   {
     title: "Fill Form Instantly",
     name: "Fill in a Flash, Focus on Getting Better",
-    link: "/appointment",
+    link: "/appointments",
     linkText: "Fill Form",
     Icon: PiNotepadBold,
     isReversed: false,
