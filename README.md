@@ -1,37 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<img src="https://raw.githubusercontent.com/dipesh2508/the-first-aid/refs/heads/main/src/assets/TheFirstAid.png" alt="App Icon" height="150">
+
+# The First Aid
+
+[Demo](https://www.the-first-aid.vercel.app/)
+
+
+**The First Aid** is a Next.js application that provides a platform for emergency consent granting and healthcare management. This app allows users to securely grant remote consent in emergencies and includes an HRMS (Healthcare Resource Management System) for managing appointments, medical records, and essential healthcare information.
+
+In situations where a patient cannot physically give consent, and no guardian is available, healthcare providers can use The First Aid app to generate a consent form. Registered nominees receive notifications and can remotely authorize the procedure by entering a secure MPIN, which legally authorizes the hospital to proceed with the necessary actions.
+
+## Features
+
+- **Remote Consent Granting**: Nominees receive a notification for emergency consent requests and can securely approve using an MPIN.
+- **HRMS (Healthcare Resource Management System)**:
+  - Appointment scheduling for patients
+  - Access to medical history, prescriptions, and vital medical data for healthcare providers
+- **User Dashboard**: Patients can manage nominees and update personal information.
+- **Admin Dashboard**: Healthcare administrators can manage patient records, schedule appointments, and monitor consent statuses.
+
+## Tech Stack
+
+- **Framework**: Next.js 14
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **UI Library**: ShadCN
+- **Animations**: Framer Motion
+- **Database**: MongoDB
+- **Design**: Initial designs created in Figma
 
 ## Getting Started
 
-First, run the development server:
+To run the project locally, follow these steps:
+
+### Prerequisites
+
+- Node.js >= 16
+- MongoDB instance (local or remote)
+
+### Installation
+
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/your-username/the-first-aid.git
+    cd the-first-aid
+    ```
+
+2. Install dependencies:
+
+    ```bash
+    npm install
+    ```
+
+3. Modify the `.env` file in the root directory and add the used environment variables.
+
+
+### Running the Application
+
+To start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Database Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The application uses MongoDB as its database. Set up your MongoDB instance and add your MongoDB connection string in the `.env` file as `MONGODB_URL`.
 
-## Learn More
+## Usage
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# the-first-aid
+- **User Registration**: Patients create an account and add nominees (e.g., family members) to receive consent requests in emergencies.
+- **Emergency Consent**: When a patient needs emergency assistance but cannot provide consent, the app notifies the nominee to approve the procedure by verifying their MPIN.
+- **Healthcare Management**: Healthcare staff can view patient records, schedule appointments, and manage emergency consent requests through the HRMS features.
