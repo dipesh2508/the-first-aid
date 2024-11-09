@@ -2,7 +2,7 @@
 
 # The First Aid
 
-[Demo](https://www.the-first-aid.vercel.app/)
+Check the [Live Demo Here](https://the-first-aid.vercel.app/)
 
 
 **The First Aid** is a Next.js application that provides a platform for emergency consent granting and healthcare management. This app allows users to securely grant remote consent in emergencies and includes an HRMS (Healthcare Resource Management System) for managing appointments, medical records, and essential healthcare information.
@@ -42,7 +42,7 @@ To run the project locally, follow these steps:
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/your-username/the-first-aid.git
+    git clone https://github.com/dipesh2508/the-first-aid.git
     cd the-first-aid
     ```
 

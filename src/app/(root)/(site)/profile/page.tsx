@@ -16,8 +16,6 @@ const Page = async () => {
   const user = await fetchUserbyClerkId(userData.id);
   if (!user) return null;
 
-  console.log(user.age, user.address, user.gender);
-
   const patientData = await getPatientById(user.patientId);
   if (!patientData) return null;
 
@@ -94,6 +92,10 @@ const Page = async () => {
           <FaRegEdit className="text-gray-400 cursor-pointer" size={20} />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <p className="text-gray-600">Username</p>
+            <p className="text-gray-800">{user.username}</p>
+          </div>
           <div>
             <p className="text-gray-600">Email</p>
             <p className="text-gray-800">{user.email}</p>
