@@ -3,7 +3,7 @@ import Image from "next/image";
 import MotionDiv from "@/components/animations/MotionDiv";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
 import Link from "next/link";
-import Dipesh from '@/assets/about/Dipesh.jpg'
+import Dipesh from '@/assets/about/Dipesh.png'
 import Isheta from '@/assets/about/Isheta.jpg'
 import Shariq from '@/assets/about/Shariq.jpg'
 
