@@ -1,14 +1,13 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { Separator } from "@/components/ui/separator";
 import { menuLinks } from "@/lib/constant/menu";
 import Link from "next/link";
 import logo from "@/assets/TheFirstAid.png";
 import Image from "next/image";
-import { useState } from "react";
 import MotionDiv from "@/components/animations/MotionDiv";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const fadeInVariants = {
   hidden: { opacity: 0, y: -20 },
@@ -25,16 +24,12 @@ const Navbar = () => {
         animate="visible"
         variants={fadeInVariants}
         transition={{ duration: 0.5 }}
+        className="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm"
       >
-        <header className="p-4 font-light relative text-black">
+        <header className="p-4 font-light relative">
           <div className="container flex justify-between h-12 mx-auto">
             <div className="flex justify-between gap-x-12">
-              <Link
-                rel="noopener noreferrer"
-                href="/"
-                aria-label="Back to homepage"
-                className="flex items-center p-2"
-              >
+              <Link href="/" className="flex items-center p-2">
                 <Image
                   src={logo}
                   alt="logo"
@@ -42,35 +37,44 @@ const Navbar = () => {
                   height={200}
                   width={200}
                   style={{
-                    filter:
-                      "brightness(0) saturate(100%) invert(15%) sepia(95%) saturate(6932%) hue-rotate(359deg) brightness(100%) contrast(124%)",
+                    filter: "brightness(0) saturate(100%) invert(15%) sepia(95%) saturate(6932%) hue-rotate(359deg) brightness(100%) contrast(124%)",
                   }}
                 />
               </Link>
               <button
-                data-collapse-toggle="navbar-default"
-                type="button"
                 onClick={() => setIsOpen(!isOpen)}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm text-primary hover:bg-primary-2 focus:outline-none focus:ring-2 focus:ring-primary dark:text-primary-4 dark:hover:bg-primary-7 dark:focus:ring-primary-8 md:hidden"
-                aria-controls="navbar-default"
-                aria-expanded="false"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm text-primary hover:bg-primary-2 focus:outline-none focus:ring-2 focus:ring-primary md:hidden"
+                aria-expanded={isOpen}
               >
-                <span className="sr-only">Open main menu</span>
-                <svg
-                  className="h-5 w-5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 17 14"
+                <span className="sr-only">Toggle menu</span>
+                <motion.div
+                  animate={isOpen ? "open" : "closed"}
+                  className="relative w-6 h-6"
                 >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M1 1h15M1 7h15M1 13h15"
+                  <motion.span
+                    className="absolute h-0.5 w-6 bg-current transform transition-transform"
+                    variants={{
+                      closed: { rotate: 0, y: 0 },
+                      open: { rotate: 45, y: 8 },
+                    }}
                   />
-                </svg>
+                  <motion.span
+                    className="absolute h-0.5 w-6 bg-current transform transition-opacity"
+                    variants={{
+                      closed: { opacity: 1 },
+                      open: { opacity: 0 },
+                    }}
+                    style={{ top: "50%", transform: "translateY(-50%)" }}
+                  />
+                  <motion.span
+                    className="absolute h-0.5 w-6 bg-current transform transition-transform"
+                    variants={{
+                      closed: { rotate: 0, y: 0 },
+                      open: { rotate: -45, y: -8 },
+                    }}
+                    style={{ bottom: 0 }}
+                  />
+                </motion.div>
               </button>
               <ul className="items-stretch hidden gap-x-8 lg:flex">
                 {menuLinks.map((menu, index) => (
@@ -82,9 +86,8 @@ const Navbar = () => {
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                   >
                     <Link
-                      rel="noopener noreferrer"
-                      href="#"
-                      className="flex items-center px-4 hover:text-primary active:text-primary"
+                      href={menu.link}
+                      className="flex items-center px-4 -mb-1 border-b-2 border-transparent hover:text-primary-6 hover:border-primary-6 transition-colors duration-300"
                     >
                       {menu.title}
                     </Link>
@@ -129,68 +132,50 @@ const Navbar = () => {
               </motion.div>
             </div>
           </div>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-              className="absolute md:hidden z-50 bg-white w-full"
-            >
-              <nav className="flex-1 px-4 py-6 overflow-y-auto">
-                <ul className="space-y-4">
-                  {menuLinks.map((menu, index) => (
-                    <motion.li
-                      key={index}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.3, delay: index * 0.1 }}
-                    >
+          <AnimatePresence>
+            {isOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+                className="absolute md:hidden z-50 bg-white w-full left-0 shadow-lg overflow-hidden"
+              >
+                <div className="container py-4 space-y-4">
+                  <div className="grid gap-y-4">
+                    {menuLinks.map((menu, index) => (
                       <Link
-                        href="#"
-                        className="block py-2 text-base font-medium text-gray-900 hover:text-primary"
+                        key={index}
+                        href={menu.link}
+                        className="hover:text-primary transition-colors duration-300"
                       >
                         {menu.title}
                       </Link>
-                    </motion.li>
-                  ))}
-                </ul>
-              </nav>
-              <div className="px-4 py-6 border-t">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Button variant="ghost" className="w-full mb-3 font-light">
-                    For Doctors
-                  </Button>
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: 0.1 }}
-                >
-                  <Link href="/sign-in" className="block mb-3">
-                    <Button className="w-full border-primary-4 hover:bg-transparent border bg-transparent font-normal text-black hover:text-black hover:border-primary-5">
-                      Log In
-                    </Button>
-                  </Link>
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: 0.2 }}
-                >
-                  <Link href="/sign-in" className="block">
-                    <Button className="w-full font-normal bg-primary-4 hover:bg-primary-5">
-                      Sign Up
-                    </Button>
-                  </Link>
-                </motion.div>
-              </div>
-            </motion.div>
-          )}
+                    ))}
+                    <Separator />
+                    <Link
+                      href="/admin/dashboard"
+                      className="hover:text-primary transition-colors duration-300"
+                    >
+                      For Doctors
+                    </Link>
+                    <Link
+                      href="/sign-in"
+                      className="hover:text-primary transition-colors duration-300"
+                    >
+                      Log in
+                    </Link>
+                    <Link
+                      href="/sign-in"
+                      className="hover:text-primary transition-colors duration-300"
+                    >
+                      Sign up
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </header>
       </MotionDiv>
     </>
