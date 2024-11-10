@@ -6,40 +6,23 @@ interface MenuLink {
 export const menuLinks: MenuLink[] = [
   {
     title: "Contact",
-    link: "#",
+    link: "/contact",
   },
   {
     title: "About",
-    link: "#",
+    link: "/about",
   },
 ];
 
-export const footerLinksRow1: MenuLink[] = [
-  {
-    title: "About Us",
-    link: "#",
-  },
-  {
-    title: "Contact",
-    link: "#",
-  },
-  {
-    title: "Features",
-    link: "#",
-  },
+export const quickLinks: MenuLink[] = [
+  { title: "About Us", link: "/about" },
+  { title: "Contact", link: "/contact" },
+  { title: "Features", link: "/about#features" },
 ];
 
-export const footerLinksRow2: MenuLink[] = [
-  {
-    title: "Terms of Service",
-    link: "#",
-  },
-  {
-    title: "Terms and Condition",
-    link: "#",
-  },
-  {
-    title: "Privacy Policy",
-    link: "#",
-  },
+export const legalLinks: MenuLink[] = [
+  { title: "Terms of Service", link: "/terms" },
+  { title: "Privacy Policy", link: "/privacy" },
+  { title: "Cookie Policy", link: "/cookies" },
 ];
+

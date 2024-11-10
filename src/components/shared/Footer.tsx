@@ -6,18 +6,7 @@ import Link from "next/link";
 import { FaXTwitter, FaGithub, FaLinkedin } from "react-icons/fa6";
 import { HiOutlineMail } from "react-icons/hi";
 import MotionDiv from "@/components/animations/MotionDiv";
-
-const quickLinks = [
-  { name: "About Us", href: "/about" },
-  { name: "Contact", href: "/contact" },
-  { name: "Features", href: "/features" },
-];
-
-const legalLinks = [
-  { name: "Terms of Service", href: "/terms" },
-  { name: "Privacy Policy", href: "/privacy" },
-  { name: "Cookie Policy", href: "/cookies" },
-];
+import { quickLinks, legalLinks } from "@/lib/constant/menu";
 
 const Footer = () => {
   const socialIconVariants = {
@@ -58,8 +47,15 @@ const Footer = () => {
       >
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-x-16 justify-between">
           {/* Logo Section */}
-          <MotionDiv className="lg:max-w-sm flex flex-col items-center" variants={containerVariants}>
-            <Link href="/" className="flex flex-col items-center gap-4 my-auto" rel="noreferrer">
+          <MotionDiv
+            className="lg:max-w-sm flex flex-col items-center"
+            variants={containerVariants}
+          >
+            <Link
+              href="/"
+              className="flex flex-col items-center gap-4 my-auto"
+              rel="noreferrer"
+            >
               <div className="flex items-center gap-3">
                 <Image
                   src={logo}
@@ -88,15 +84,15 @@ const Footer = () => {
               </h3>
               <ul className="space-y-3">
                 {quickLinks.map((item) => (
-                  <li key={item.name}>
+                  <li key={item.title}>
                     <MotionDiv variants={linkVariants} whileHover="hover">
                       <Link
-                        href={item.href}
+                        href={item.link}
                         className="text-primary-1 hover:text-primary-3 transition-colors"
                         rel="noreferrer"
                         target="_blank"
                       >
-                        {item.name}
+                        {item.title}
                       </Link>
                     </MotionDiv>
                   </li>
@@ -110,15 +106,15 @@ const Footer = () => {
               </h3>
               <ul className="space-y-3">
                 {legalLinks.map((item) => (
-                  <li key={item.name}>
+                  <li key={item.title}>
                     <MotionDiv variants={linkVariants} whileHover="hover">
                       <Link
-                        href={item.href}
+                        href={item.link}
                         className="text-primary-1 hover:text-primary-3 transition-colors"
                         rel="noreferrer"
                         target="_blank"
                       >
-                        {item.name}
+                        {item.title}
                       </Link>
                     </MotionDiv>
                   </li>

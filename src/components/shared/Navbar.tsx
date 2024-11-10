@@ -31,7 +31,7 @@ const Navbar = () => {
             <div className="flex justify-between gap-x-12">
               <Link
                 rel="noopener noreferrer"
-                href="#"
+                href="/"
                 aria-label="Back to homepage"
                 className="flex items-center p-2"
               >
