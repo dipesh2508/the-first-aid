@@ -5,7 +5,7 @@ import Link from "next/link";
 import twofoursever from "@/assets/24_7 1.png";
 import dr from "@/assets/dr.png";
 import { GoChevronRight } from "react-icons/go";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import MotionDiv from "@/components/animations/MotionDiv";
 import "@/app/globals.css";
 

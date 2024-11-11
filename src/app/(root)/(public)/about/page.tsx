@@ -1,9 +1,9 @@
-import AboutHero from "@/components/about/AboutHero";
-import Features from "@/components/about/Features";
-import Team from "@/components/about/Team";
-import Values from "@/components/about/Values";
-import Brand from "@/components/about/Brand";
-import Disclaimer from "@/components/about/Disclaimer";
+import AboutHero from "@/components/pages/about/AboutHero";
+import Features from "@/components/pages/about/Features";
+import Team from "@/components/pages/about/Team";
+import Values from "@/components/pages/about/Values";
+import Brand from "@/components/pages/about/Brand";
+import Disclaimer from "@/components/pages/about/Disclaimer";
 
 const AboutPage = () => {
   return (

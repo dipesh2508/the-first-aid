@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
-import { Separator } from "../ui/separator";
+import { Separator } from "../../ui/separator";
 import MotionDiv from "@/components/animations/MotionDiv";
 import { motion, useSpring, useTransform } from "framer-motion";
 

@@ -1,8 +1,8 @@
-import About from "@/components/home/About";
-import CTA from "@/components/home/CTA";
-import Hero from "@/components/home/Hero";
-import Slider from "@/components/home/Slider";
-import Stats from "@/components/home/Stats";
+import About from "@/components/pages/home/About";
+import CTA from "@/components/pages/home/CTA";
+import Hero from "@/components/pages/home/Hero";
+import Slider from "@/components/pages/home/Slider";
+import Stats from "@/components/pages/home/Stats";
 import Navbar from "@/components/shared/Navbar";
 
 export default function Home() {

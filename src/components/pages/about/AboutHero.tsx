@@ -1,7 +1,7 @@
 import React from "react";
 import MotionDiv from "@/components/animations/MotionDiv";
 import Image from "next/image";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { ArrowRight, Clock, Shield, Users } from "lucide-react";
 
 const fadeInVariants = {

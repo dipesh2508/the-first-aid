@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import MotionDiv from "@/components/animations/MotionDiv";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 
 const fadeInVariants = {
   hidden: { opacity: 0 },
