@@ -78,7 +78,7 @@ const Page: React.FC = async () => {
             <DashboardCard
               title="Legal Guardians"
               name="Keep your family informed, always"
-              link="/user/beneficiaries"
+              link="/beneficiary"
               linkText="Add Guardians"
               Icon={FaUserPlus}
               isReversed={true}

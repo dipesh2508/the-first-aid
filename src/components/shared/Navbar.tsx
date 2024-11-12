@@ -8,6 +8,8 @@ import logo from "@/assets/TheFirstAid.png";
 import Image from "next/image";
 import MotionDiv from "@/components/animations/MotionDiv";
 import { motion, AnimatePresence } from "framer-motion";
+import { RiCloseLine } from "react-icons/ri";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 const fadeInVariants = {
   hidden: { opacity: 0, y: -20 },
@@ -24,7 +26,7 @@ const Navbar = () => {
         animate="visible"
         variants={fadeInVariants}
         transition={{ duration: 0.5 }}
-        className="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm"
+        className={`sticky top-0 z-50 ${isOpen ? 'bg-white' : 'bg-white/80'} backdrop-blur-md shadow-sm`}
       >
         <header className="p-4 font-light relative">
           <div className="container flex justify-between h-12 mx-auto">
@@ -47,34 +49,11 @@ const Navbar = () => {
                 aria-expanded={isOpen}
               >
                 <span className="sr-only">Toggle menu</span>
-                <motion.div
-                  animate={isOpen ? "open" : "closed"}
-                  className="relative w-6 h-6"
-                >
-                  <motion.span
-                    className="absolute h-0.5 w-6 bg-current transform transition-transform"
-                    variants={{
-                      closed: { rotate: 0, y: 0 },
-                      open: { rotate: 45, y: 8 },
-                    }}
-                  />
-                  <motion.span
-                    className="absolute h-0.5 w-6 bg-current transform transition-opacity"
-                    variants={{
-                      closed: { opacity: 1 },
-                      open: { opacity: 0 },
-                    }}
-                    style={{ top: "50%", transform: "translateY(-50%)" }}
-                  />
-                  <motion.span
-                    className="absolute h-0.5 w-6 bg-current transform transition-transform"
-                    variants={{
-                      closed: { rotate: 0, y: 0 },
-                      open: { rotate: -45, y: -8 },
-                    }}
-                    style={{ bottom: 0 }}
-                  />
-                </motion.div>
+                {isOpen ? (
+                  <RiCloseLine className="w-6 h-6" />
+                ) : (
+                  <RxHamburgerMenu className="w-6 h-6" />
+                )}
               </button>
               <ul className="items-stretch hidden gap-x-8 lg:flex">
                 {menuLinks.map((menu, index) => (
@@ -139,38 +118,71 @@ const Navbar = () => {
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.3 }}
-                className="absolute md:hidden z-50 bg-white w-full left-0 shadow-lg overflow-hidden"
+                className="absolute md:hidden z-50 bg-white w-full left-0 shadow-lg overflow-hidden border-t border-gray-100"
               >
-                <div className="container py-4 space-y-4">
-                  <div className="grid gap-y-4">
+                <div className="container py-6 px-4">
+                  <div className="grid gap-y-6">
                     {menuLinks.map((menu, index) => (
-                      <Link
+                      <motion.div
                         key={index}
-                        href={menu.link}
-                        className="hover:text-primary transition-colors duration-300"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
                       >
-                        {menu.title}
-                      </Link>
+                        <Link
+                          href={menu.link}
+                          className="flex items-center space-x-2 text-gray-600 hover:text-primary-6 transition-colors duration-300"
+                        >
+                          <span className="w-2 h-2 rounded-full bg-primary-6/40"></span>
+                          <span>{menu.title}</span>
+                        </Link>
+                      </motion.div>
                     ))}
-                    <Separator />
-                    <Link
-                      href="/admin/dashboard"
-                      className="hover:text-primary transition-colors duration-300"
-                    >
-                      For Doctors
-                    </Link>
-                    <Link
-                      href="/sign-in"
-                      className="hover:text-primary transition-colors duration-300"
-                    >
-                      Log in
-                    </Link>
-                    <Link
-                      href="/sign-in"
-                      className="hover:text-primary transition-colors duration-300"
-                    >
-                      Sign up
-                    </Link>
+                    
+                    <Separator className="my-2" />
+                    
+                    <div className="space-y-4">
+                      <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: (menuLinks.length + 1) * 0.1 }}
+                      >
+                        <Link
+                          href="/admin/dashboard"
+                          className="flex items-center px-4 py-2 bg-primary-1/50 rounded-lg text-primary-6 hover:bg-primary-2 transition-colors duration-300"
+                        >
+                          For Doctors
+                        </Link>
+                      </motion.div>
+
+                      <div className="grid grid-cols-2 gap-4">
+                        <motion.div
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: (menuLinks.length + 2) * 0.1 }}
+                        >
+                          <Link
+                            href="/sign-in"
+                            className="flex items-center justify-center px-4 py-2 border border-primary-4 rounded-lg text-gray-700 hover:bg-primary-1 hover:text-primary-6 transition-all duration-300"
+                          >
+                            Log in
+                          </Link>
+                        </motion.div>
+
+                        <motion.div
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: (menuLinks.length + 3) * 0.1 }}
+                        >
+                          <Link
+                            href="/sign-up"
+                            className="flex items-center justify-center px-4 py-2 bg-primary-6 rounded-lg text-white hover:bg-primary-7 transition-colors duration-300"
+                          >
+                            Sign up
+                          </Link>
+                        </motion.div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </motion.div>
